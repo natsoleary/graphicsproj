@@ -1,19 +1,21 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land } from 'objects';
+import { Flower, Land, Shark, Turtle} from 'objects';
 import { BasicLights } from 'lights';
-import { Turtle } from '../objects';
+// import { Turtle } from '../objects';
 
 class SeedScene extends Scene {
-    constructor() {
+    constructor(camera) {
         // Call parent Scene() constructor
         super();
 
         // Init state
         this.state = {
             gui: new Dat.GUI(), // Create GUI for scene
-            rotationSpeed: 1,
             updateList: [],
+            x: 0,
+            y: 0,
+            z: 0,
         };
 
         // Set background to a nice color
@@ -22,12 +24,12 @@ class SeedScene extends Scene {
         // Add meshes to scene
         const land = new Land();
         const flower = new Flower(this);
-        const turtle = new Turtle(this);
+        // const shark = new Shark();
         const lights = new BasicLights();
+        const turtle = new Turtle(this, camera);
         this.add(land, flower, turtle, lights);
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
 
     addToUpdateList(object) {
@@ -35,12 +37,11 @@ class SeedScene extends Scene {
     }
 
     update(timeStamp) {
-        const { rotationSpeed, updateList } = this.state;
-        this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+        const { updateList, x, y, z } = this.state;
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
-            obj.update(timeStamp);
+            obj.update(timeStamp, this.state.x, this.state.y, this.state.z);
         }
     }
 }
