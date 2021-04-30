@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, Shark, Turtle} from 'objects';
+import { Flower, Land, Shark, Turtle, Seafloor} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
@@ -22,12 +22,13 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const land = new Land();
-        const flower = new Flower(this);
+        // const land = new Land();
+        // const flower = new Flower(this);
         // const shark = new Shark();
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
-        this.add(land, flower, turtle, lights);
+        var seafloor = new Seafloor(this);
+        this.add(turtle, seafloor, lights);
 
         // Populate GUI
     }
@@ -41,7 +42,7 @@ class SeedScene extends Scene {
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
-            obj.update(timeStamp, this.state.x, this.state.y, this.state.z);
+            obj.update(timeStamp);
         }
     }
 }

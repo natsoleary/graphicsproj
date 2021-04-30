@@ -29,7 +29,7 @@ class Turtle extends Group {
         // Add update list
       parent.addToUpdateList(this);
     }
-    update(timeStamp, x, y, z) {
+    update(timeStamp) {
             this.state.parent.state.y -= 0.5;
             // move turtle foward
             this.state.parent.state.z += this.state.velocity * Math.cos(this.state.yRotate);
