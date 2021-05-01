@@ -16,16 +16,37 @@ class Seafloor extends Group {
             //required for flat shading
             flatShading: true,
         }))
+        console.log(terrain);
+        // 82.4% red, 70.6% green and 54.9% blue.
+        terrain.material.color.b = 0.2;
+        terrain.material.color.g = 0.2;
+        terrain.material.color.r = 0.2;
+
+        // cube.material.color.setHex(  );
+
         // update location on the map
         let groundY = -200 //-249;
         terrain.position.y = groundY - 1;
         terrain.rotation.x = -Math.PI / 2;
         terrain.receiveShadow = true;
 
-        this.add(terrain);
+        this.addBumps();
 
+        this.add(terrain);
         // Add self to parent's update list
         parent.addToUpdateList(this);
+    }
+
+    addBumps() {
+        console.log(this.geometry);
+        for (let j = 0; j < terrainSize.vertsHeight; j += 5) {
+            for (let i = 0; i < terrainSize.vertsWidth; i++) {
+                const index = (j*(terrainSize.vertsWidth)+i);
+                // console.log(index);
+                const vertex = this.geometry.vertices[index];
+                vertex.z += 10;
+        }
+        }
     }
     update (timeStamp){
         var offset = 5*Math.sin(timeStamp/(5*1000));
@@ -42,6 +63,7 @@ class Seafloor extends Group {
         this.geometry.computeFlatVertexNormals();
 
     }
+
 
 }
 export default Seafloor;
