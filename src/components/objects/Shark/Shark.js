@@ -1,7 +1,7 @@
 import { Group, Vector3 } from 'three';
-import MODEL from './shark.obj';
+import MODEL from './Mesh_Shark.obj';
 import MATERIAL from './shark.mtl';
-import IMAGE from './SharkTxt.png';
+import IMAGE from './Tex_Shark.png';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
 
@@ -17,8 +17,8 @@ class Shark extends Group {
       object.traverse((child) => {
         if (child.type == "Mesh") child.material.map = texture;
       });
-    //   object.scale.multiplyScalar(0.5);
-    //   object.position.y = -23.7;
+      object.scale.multiplyScalar(0.1);
+      //object.position.y = -23.7;
       this.add(object);
     });
   }

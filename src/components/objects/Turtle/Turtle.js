@@ -1,4 +1,5 @@
-import { Group, MaterialLoader } from 'three';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+import { Group } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import MODEL from './NOVELO_TURTLE.obj';
@@ -16,16 +17,23 @@ class Turtle extends Group {
             parent: parent,
             model: null,
         };
-        loader.load(MODEL, (object) => { // load object and add to scene
-            // let material = new MaterialLoader().load(MAT);
-            // // object.traverse((child) => {
-            // //     if (child.type == "Mesh") child.material.map = material;
-            // //   });
-            object.scale.multiplyScalar(0.01);
-            this.state.model = object.children[0];
+        var mtlLoader = new MTLLoader();
+  
+        mtlLoader.load(MAT, ( materials ) => {
+        materials.preload();
+        loader.setMaterials( materials );
 
-          this.add(object);
-        });
+        
+        loader.load(MODEL, (object) => { // load object and add to scene
+          //  object.traverse((child) => {
+          //   if (child.type == "Mesh") child.material.map = material;
+          //    });
+          console.log(this)
+        object.scale.multiplyScalar(0.01);
+        this.state.model = object.children[0];
+        this.add(object);
+      });
+    });
         // Add update list
       parent.addToUpdateList(this);
     }
