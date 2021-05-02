@@ -38,17 +38,17 @@ class Turtle extends Group {
       parent.addToUpdateList(this);
     }
     update(timeStamp) {
-            this.state.parent.state.y -= 0.5;
-            // move turtle foward
-            this.state.parent.state.z += this.state.velocity * Math.cos(this.state.yRotate);
-            this.state.parent.state.x += this.state.velocity * Math.sin(this.state.yRotate);
-            this.state.camera.position.x = 300 * Math.sin(-this.state.yRotate);
-            this.state.camera.position.y = 350 * Math.sin(this.state.xRotate + Math.PI/15);
-            this.state.camera.position.z = -300 * Math.cos(this.state.yRotate);
-            if (this.state.model != null) {
-            this.state.camera.lookAt(this.state.model.position);
-            }
-            this.state.prevTimeStamp = timeStamp;
+            // this.state.parent.state.y -= 0.5;
+            // // move turtle foward
+            // this.state.parent.state.z += this.state.velocity * Math.cos(this.state.yRotate);
+            // this.state.parent.state.x += this.state.velocity * Math.sin(this.state.yRotate);
+            // this.state.camera.position.x = 300 * Math.sin(-this.state.yRotate);
+            // this.state.camera.position.y = 350 * Math.sin(this.state.xRotate + Math.PI/15);
+            // this.state.camera.position.z = -300 * Math.cos(this.state.yRotate);
+            // if (this.state.model != null) {
+            // this.state.camera.lookAt(this.state.model.position);
+            // }
+            // this.state.prevTimeStamp = timeStamp;
 
 
     }
