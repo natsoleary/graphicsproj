@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, Shark, Turtle, Seafloor} from 'objects';
+import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
@@ -27,8 +27,9 @@ class SeedScene extends Scene {
         // const shark = new Shark();
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
-        var seafloor = new Seafloor(this);
-        this.add(turtle, seafloor, lights);
+        // var seafloor = new Seafloor(this);
+        var terrain = new TerrainPlane(this);
+        this.add(turtle, lights, terrain);
 
         // Populate GUI
     }

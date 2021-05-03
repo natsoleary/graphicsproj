@@ -1,1 +1,1 @@
-export { default as Seafloor } from './Seafloor.js';
+export { default as Seafloor} from './seafloor.js';
