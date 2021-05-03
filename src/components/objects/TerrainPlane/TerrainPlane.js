@@ -20,11 +20,14 @@ class TerrainPlane extends Group {
 
         };
 
-        this.brown = 0x00ff00;
-        this.tan = 0x0000FF;
+        this.brown = 0x964B00;
+        this.tan = 0xD2B48C;
         this.orange = 0xCC5500;
         this.purple = 0xFF00FF;
-        this.pink = 0xFF0000;
+        this.red = 0x8a3324;
+        this.green = 0x006400;
+        this.darkbrown = 0x654321;
+        this.gray = 0x808080;
 
         this.state.xOffset = this.state.xOffset*this.state.chunkVertWidth/this.state.chunkWidth;
         this.state.zOffset = this.state.zOffset*this.state.chunkVertWidth/this.state.chunkWidth;
@@ -138,9 +141,12 @@ class TerrainPlane extends Group {
             }
             const max = Math.max(a.z,Math.max(b.z,c.z));
             if(max <=0)   return f.color.set(this.tan);
-            if(max <=15) return f.color.set(this.brown);
-            if(max <=30)   return f.color.set(this.orange);
-            if(max <=100)   return f.color.set(this.purple);
+            if(max <=15) return f.color.set(this.gray);
+            if(max <=30)   return f.color.set(this.darkbrown);
+            if (max <= 45) return f.color.set(this.tan);
+            if (max <= 60) return f.color.set(this.brown);
+            if (max <= 75) return f.color.set(this.orange)
+            if(max <=100)   return f.color.set(this.darkbrown);
         
             //otherwise, return white
             else return f.color.set(this.pink);

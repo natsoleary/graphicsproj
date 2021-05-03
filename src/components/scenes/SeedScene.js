@@ -1,5 +1,5 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
+import { Scene, Color, FogExp2, Fog  } from 'three';
 import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
@@ -20,6 +20,12 @@ class SeedScene extends Scene {
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
+        const color = 0x800080;
+        const density = 0.01;
+        const near = 10;
+        const far = 500;
+        this.fog = new Fog(color, near, far);
+        // this.fog = new FogExp2(color, density);
 
         // Add meshes to scene
         // const land = new Land();
