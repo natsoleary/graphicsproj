@@ -1,13 +1,15 @@
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { Group } from 'three';
+import { Group, Vector3, AnimationMixer, AnimationClip, Scene, Matrix4 } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import MODEL from './NOVELO_TURTLE.obj';
+//import MODEL from './NOVELO_TURTLE.obj';
+import MODEL from './model_50a_-_hatchling_hawksbill_sea_turtle/scene.gltf'
 import MAT from './NOVELO_TURTLE.mtl';
 class Turtle extends Group {
     constructor(parent, camera) {
         super();
-        const loader = new OBJLoader();
+        //const loader = new OBJLoader();
         this.name = 'turtle';
         this.state = {
             xRotate: 0,
@@ -33,24 +35,97 @@ class Turtle extends Group {
             repeated: true,
         };
 
-        var mtlLoader = new MTLLoader();
+        // var mtlLoader = new MTLLoader();
       
-            mtlLoader.load(MAT, ( materials ) => {
-            materials.preload();
-            loader.setMaterials( materials );
+        //     mtlLoader.load(MAT, ( materials ) => {
+        //     materials.preload();
+        //     loader.setMaterials( materials );
 
             
-            loader.load(MODEL, (object) => { // load object and add to scene
-              //  object.traverse((child) => {s
-              //   if (child.type == "Mesh") child.material.map = material;
-              //    });
+        //     loader.load(MODEL, (object) => { // load object and add to scene
+        //       //  object.traverse((child) => {s
+        //       //   if (child.type == "Mesh") child.material.map = material;
+        //       //    });
 
-            object.scale.multiplyScalar(0.01);
-            this.state.model = object.children[0];
-            console.log(this.state.model);
-            this.add(object);
-          });
-        });
+        //     object.scale.multiplyScalar(0.01);
+        //     this.state.model = object.children[0];
+        //     this.add(object);
+        //   });
+        // });
+
+    let prevTurtPosition;
+
+    if (this.state.model !== null) {
+      prevTurtPosition = this.state.model;
+      this.remove(this.state.model);
+      this.state.model.geometry.dispose();
+      this.state.model.material.dispose();
+      this.state.mixer = null;
+      this.state.prevTimeStamp = null;
+      this.state.model = null;
+      this.state.speed = 1000;
+      this.state.upTime = 0;
+      this.state.downTime = 0;
+      this.state.rightTime = 0;
+      this.state.leftTime = 0;
+      this.state.animation =  null;
+      this.state.action = null;
+      this.state.newAnimate = false;
+    }
+
+    const loader = new GLTFLoader();
+
+    // load the type of bird
+    loader.load(MODEL, (gltf) => {
+      const model = gltf.scene.children[0];
+      model.scale.set(50, 50, 50);
+      //model.rotation.x = 180;
+      // model.rotation.y = 180;
+      //  model.rotation.z = 90;
+
+      // camera.rotation.copy
+      // model.rotation.x = Math.PI;
+
+      // If there was a previous turtle, set it to that position and not the
+      // origin
+      if (prevTurtPosition == null) {
+        model.position.copy(new Vector3(0, 0, 0));
+      }
+      else {
+        model.position.copy(prevTurtPosition.position);
+        model.rotation.copy(prevTurtPosition.rotation);
+      }
+
+      //copy rotations into state
+      model.rotation.reorder('YXZ');
+      console.log(model);
+
+      // model.rotation.z = Math.PI;
+      // model.geometry.translate(model.position.x - model.geometry.center.x, model.position.y - model.geometry.center.y, model.position.z - model.geometry.center.z);
+      model.rotation.x = Math.PI/2;
+      model.rotation.y = Math.PI;
+
+      this.state.xRotate = model.rotation.x;
+      this.state.yRotate = model.rotation.y;
+      this.state.zRotate = model.rotation.z;
+
+      this.state.animation = gltf.animations[0];
+
+      // add mixer to state
+      const mixer = new AnimationMixer(model);
+
+      this.state.mixer = mixer;
+
+      this.state.action = mixer.clipAction(gltf.animations[0]);
+      this.state.action.play();
+
+      // set model to state
+      this.state.model = model;
+
+
+      // add model to scene
+      this.add(model);
+    });
 
     // window listeners to rotate turtle
       // set keysPressed true when key is pressed
@@ -67,7 +142,7 @@ class Turtle extends Group {
 
         // Add update list
       parent.addToUpdateList(this);
-    }
+  }
 
 
  // rotate turtle based on arrow keys pressed
@@ -97,9 +172,9 @@ class Turtle extends Group {
   }
 }
 
+//"Model 50A - Hatchling Hawksbill sea turtle" (https://skfb.ly/6QTKp) by DigitalLife3D is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).
 
-
-update(timeStamp, x, y, z) {
+update(timeStamp) {
 
 
      
@@ -132,16 +207,17 @@ update(timeStamp, x, y, z) {
                   // let track =  animation.tracks[0];
                   // let values = track.values;
           
-                  // let vals = [];
-                  // if (this.state.bird === 'Stork') {
-                  //   vals = [0,13,26,39,58,72,86,103,104,117,136,150,168,169];
-                  // }
-                  // else if (this.state.bird === 'Parrot'){
-                  //   vals = [0,12,24,37,50,67,80,93,106,119];
-                  // }
-                  // else if (this.state.bird === 'Flamingo') {
-                  //   vals = [5,18,33,48,63,79,94,109,124,139,152,165,178,191,201];
-                  // }
+                  // let vals = [0,13,26,39,58,72,86,103,104,117,136,150,168,169];
+                  // // let vals = [];
+                  // // if (this.state.bird === 'Stork') {
+                  // //   vals = [0,13,26,39,58,72,86,103,104,117,136,150,168,169];
+                  // // }
+                  // // else if (this.state.bird === 'Parrot'){
+                  // //   vals = [0,12,24,37,50,67,80,93,106,119];
+                  // // }
+                  // // else if (this.state.bird === 'Flamingo') {
+                  // //   vals = [5,18,33,48,63,79,94,109,124,139,152,165,178,191,201];
+                  // // }
           
                   // for (let i = 0; i < values.length; i++) {
                   //   if (vals.includes(i)) {
@@ -204,7 +280,7 @@ update(timeStamp, x, y, z) {
           
           
               }
-          
+       
               // update turtle's speed based on its velocity if it is greater than 2
               if (this.state.velocity >= 2 && this.state.downTime + 1000 < timeStamp && this.state.upTime + 1000 < timeStamp){
                 if (this.state.velocity >= 4) {
@@ -221,24 +297,23 @@ update(timeStamp, x, y, z) {
                 this.state.camera.lookAt(this.state.model.position);
                 }
 
-              this.state.prevTimeStamp = timeStamp;
 
-              // //  animate the turtle
-              // if (this.state.mixer !== null) {
-              //   // set previous time stamp if null
-              //   if (this.state.prevTimeStamp === null) {
-              //     this.state.prevTimeStamp = timeStamp;
-              //   }
+              //  animate the turtle
+              if (this.state.mixer !== null) {
+                // set previous time stamp if null
+                if (this.state.prevTimeStamp === null) {
+                  this.state.prevTimeStamp = timeStamp;
+                }
           
-              //   // calculate delta
-              //   const delta = (timeStamp - this.state.prevTimeStamp) / this.state.speed;
+                // calculate delta
+                const delta = (timeStamp - this.state.prevTimeStamp) / this.state.speed;
+
+                // update previous time stamp
+                this.state.prevTimeStamp = timeStamp;
           
-              //   // update previous time stamp
-              //   this.state.prevTimeStamp = timeStamp;
-          
-              //   // update animation
-              //   this.state.mixer.update(delta);
-              // }
+                // update animation
+                this.state.mixer.update(delta);
+              }
           }
           
 

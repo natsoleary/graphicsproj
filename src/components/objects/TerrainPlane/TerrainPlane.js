@@ -120,7 +120,7 @@ class TerrainPlane extends Group {
     });
     // console.log("from state", this.state.babyModel);
 
-        this.spawnBabies();
+        // this.spawnBabies();
 
         // Add self to parent's update list
         // parent.addToUpdateList(this);

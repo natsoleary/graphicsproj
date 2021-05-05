@@ -265,7 +265,7 @@ class TerrainManager extends Group {
       this.position.y = y - startYBelow;
       this.position.z = -z;
       for (let chunk of this.state.terrain_chunks) {
-        chunk.spawnBabies();
+        // chunk.spawnBabies();
       }
 
     }
