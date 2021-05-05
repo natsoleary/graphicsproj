@@ -1711,7 +1711,7 @@
   "buffers": [
     {
       "byteLength": 456600,
-      "uri": "scene.bin"
+      "uri": "src/components/objects/Turtle/model_50a_-_hatchling_hawksbill_sea_turtle/scene.bin"
     }
   ],
   "extensionsRequired": [
@@ -1722,16 +1722,16 @@
   ],
   "images": [
     {
-      "uri": "textures/hawksbill.body_diffuse.png"
+      "uri": "src/components/objects/Turtle/model_50a_-_hatchling_hawksbill_sea_turtle/textures/hawksbill.body_diffuse.png"
     },
     {
-      "uri": "textures/hawksbill.body_specularGlossiness.png"
+      "uri": "src/components/objects/Turtle/model_50a_-_hatchling_hawksbill_sea_turtle/textures/hawksbill.body_specularGlossiness.png"
     },
     {
-      "uri": "textures/hawksbill.body_normal.png"
+      "uri": "src/components/objects/Turtle/model_50a_-_hatchling_hawksbill_sea_turtle/textures/hawksbill.body_normal.png"
     },
     {
-      "uri": "textures/hawksbill.eyes_diffuse.png"
+      "uri": "src/components/objects/Turtle/model_50a_-_hatchling_hawksbill_sea_turtle/textures/hawksbill.eyes_diffuse.png"
     }
   ],
   "materials": [
