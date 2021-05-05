@@ -202,39 +202,6 @@ update(timeStamp, x, y, z) {
                 this.state.parent.state.z += this.state.velocity * Math.cos(this.state.yRotate);
                 this.state.parent.state.x += this.state.velocity * Math.sin(this.state.yRotate);
           
-                // reposition turtle if arrows were pressed and aren't currently being pressed
-                if (this.state.upTime + 1000 < timeStamp) {
-                  if (this.state.xRotate <= 0.005) {
-                    this.state.xRotate += 0.005;
-                  }
-                  if (this.state.speed <= 1000) {
-                    this.state.speed += 50;
-                  }
-                }
-                if (this.state.downTime + 1000 < timeStamp) {
-                  if (this.state.xRotate >= 0.005) {
-                    this.state.xRotate -= 0.005;
-                  }
-                }
-                // if (this.state.downTime + 1000 < timeStamp && this.state.newAnimate) {
-                //   this.state.speed = 1000;
-                //   this.state.mixer.stopAllAction();
-                //   const action = this.state.mixer.clipAction(this.state.animation);
-                //   this.state.action = this.state.action.crossFadeTo(action, 1, true);
-                //   this.state.action.play();
-                //   this.state.newAnimate = false;
-                // }
-                if (this.state.leftTime + 1000 < timeStamp) {
-                  if (this.state.zRotate <= 0) {
-                    this.state.zRotate += 0.005;
-                  }
-                }
-                if (this.state.rightTime + 1000 < timeStamp) {
-                  if (this.state.zRotate >= 0) {
-                    this.state.zRotate -= 0.005;
-                  }
-                }
-          
           
               }
           
