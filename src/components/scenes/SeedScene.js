@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
-import { Flower, Land, Shark, Turtle, Seafloor} from 'objects';
+import { Scene, Color, FogExp2, Fog  } from 'three';
+import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
@@ -20,6 +20,12 @@ class SeedScene extends Scene {
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
+        const color = 0x84e0ff;
+        const density = 0.01;
+        const near = 10;
+        const far = 1200;
+        this.fog = new Fog(color, near, far);
+        // this.fog = new FogExp2(color, density);
 
         // Add meshes to scene
         // const land = new Land();
@@ -28,7 +34,9 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
         var seafloor = new Seafloor(this);
-        this.add(turtle, seafloor, lights);
+        // var terrain = new TerrainPlane(this);
+        var terrainMan = new TerrainManager(this);
+        this.add(turtle, lights, terrainMan);
 
         // Populate GUI
     }
@@ -42,7 +50,12 @@ class SeedScene extends Scene {
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
-            obj.update(timeStamp);
+            obj.update(timeStamp, this.state.x, this.state.y, this.state.z);
+
+            // update twice to prevent glitching due to moving terrain
+            if (obj.name == "TerrainManager") {
+                obj.update(timeStamp, this.state.x, this.state.y, this.state.z);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ class Seafloor extends Group {
         const textureLoader = new TextureLoader();
         textureLoader.load(SAND, (texture)=> {
 	        let material = new MeshLambertMaterial({
-    	        // map: texture,
+    	        map: texture,
                 wireframe: false,
                 vertexColors: VertexColors,
                 //required for flat shading
@@ -26,21 +26,21 @@ class Seafloor extends Group {
             const terrain = new Mesh(this.geometry, material);
             console.log(terrain);
             // 82.4% red, 70.6% green and 54.9% blue.
-            terrain.material.color.b = 0.3;
-            terrain.material.color.g = 0.3;
-            terrain.material.color.r = 0.3;
+            terrain.material.color.b = 0.6;
+            terrain.material.color.g = 0.6;
+            terrain.material.color.r = 0.6;
             this.count = 0;
 
             // cube.material.color.setHex(  );
 
             // update location on the map
-            let groundY = -200 //-249;
+            let groundY = -180 //-249;
             terrain.position.y = groundY - 1;
             terrain.rotation.x = -Math.PI / 2;
             terrain.receiveShadow = true;
 
 
-            this.addBumps();
+            // this.addBumps();
             // this.newBump();
 
             this.add(terrain);
@@ -165,21 +165,21 @@ class Seafloor extends Group {
         //     this.geometry.vertices[i].z = this.geometry.vertices[i].z + offset;
         //   }
         // } 
-        for (let j = 0; j < this.bumps.length; j++) {
-            this.bumps[j].position.z -= 1;
-            if (this.bumps[j].position.z < -500) {
-                // this.bumps[j].dispose();
-                this.remove(this.bumps[j]);
-                this.bumps[j].geometry.dispose();
-                // this.bumps = this.bumps.slice(j, j);
-            }
-        }
-        if (this.count >= 70) {
-            this.newBump();
-            this.count = 0;
-        }
+        // for (let j = 0; j < this.bumps.length; j++) {
+        //     this.bumps[j].position.z -= 1;
+        //     if (this.bumps[j].position.z < -500) {
+        //         // this.bumps[j].dispose();
+        //         this.remove(this.bumps[j]);
+        //         this.bumps[j].geometry.dispose();
+        //         // this.bumps = this.bumps.slice(j, j);
+        //     }
+        // }
+        // if (this.count >= 70) {
+        //     this.newBump();
+        //     this.count = 0;
+        // }
 
-        this.geometry.computeFlatVertexNormals();
+        // this.geometry.computeFlatVertexNormals();
 
     }
 
