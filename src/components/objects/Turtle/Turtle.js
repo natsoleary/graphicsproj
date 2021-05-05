@@ -47,6 +47,7 @@ class Turtle extends Group {
 
             object.scale.multiplyScalar(0.01);
             this.state.model = object.children[0];
+            console.log(this.state.model);
             this.add(object);
           });
         });
