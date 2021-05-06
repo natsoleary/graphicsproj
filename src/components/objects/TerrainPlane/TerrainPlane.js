@@ -5,6 +5,7 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import MODEL from './NOVELO_TURTLE.obj';
 import MAT from './NOVELO_TURTLE.mtl';
 import SAND from './sandgrain.jpeg';
+import {Baby} from '../Baby';
 
 
 const terrainSize = {width: 1000, height: 1000, vertsWidth: 100, vertsHeight: 100};
@@ -96,45 +97,29 @@ class TerrainPlane extends Group {
 
         this.add(terrain);
         this.add(lowerTerrain);
-        const loader = new OBJLoader();
 
-        var mtlLoader = new MTLLoader();
-      
-        mtlLoader.load(MAT, ( materials ) => {
-        materials.preload();
-        loader.setMaterials( materials );
 
-        
-        loader.load(MODEL, (object) => { // load object and add to scene
-          //  object.traverse((child) => {s
-          //   if (child.type == "Mesh") child.material.map = material;
-          //    });
-
-        object.scale.multiplyScalar(0.01);
-
-        
-        this.state.babyModel = object.children[0];
-        // console.log(this.babyModel);
-        // this.add(object);
-      });
-    });
     // console.log("from state", this.state.babyModel);
 
-        // this.spawnBabies();
+        this.spawnBabies();
 
         // Add self to parent's update list
         // parent.addToUpdateList(this);
 
     }
     spawnBabies() {
-        if (this.state.babyModel != null) {
         // console.log("in here", this.state.babyModel)
         // this.state.babyModel.position.x = 5;
         // this.state.babyModel.position.z = 5;
         // this.state.babyModel.position.y = -180;
-        this.state.babyModel.position.set(Math.random() * 2000 - 1000, 400 + Math.random() * 100, Math.random() * 2000 - 1000);
-        this.add(this.state.babyModel);
-        }
+        let baby = new Baby();
+        let baby2 = new Baby();
+        let baby3 = new Baby();
+        this.add(baby);
+        this.add(baby2);
+        this.add(baby3);
+
+        
        
     }
 

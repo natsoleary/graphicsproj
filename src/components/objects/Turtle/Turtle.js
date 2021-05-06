@@ -75,16 +75,10 @@ class Turtle extends Group {
 
     const loader = new GLTFLoader();
 
-    // load the type of bird
+    // load the turtle
     loader.load(MODEL, (gltf) => {
       const model = gltf.scene.children[0];
       model.scale.set(50, 50, 50);
-      //model.rotation.x = 180;
-      // model.rotation.y = 180;
-      //  model.rotation.z = 90;
-
-      // camera.rotation.copy
-      // model.rotation.x = Math.PI;
 
       // If there was a previous turtle, set it to that position and not the
       // origin
@@ -99,16 +93,11 @@ class Turtle extends Group {
       //copy rotations into state
       model.rotation.reorder('YXZ');
 
-      // model.rotation.z = Math.PI;
-      // model.geometry.translate(model.position.x - model.geometry.center.x, model.position.y - model.geometry.center.y, model.position.z - model.geometry.center.z);
 
 
       this.state.xRotate = 0;
       this.state.yRotate = 0;
       this.state.zRotate = 0;
-      // let quat = new Quaternion();
-      // quat.setFromAxisAngle( new Vector3( 1/2, 1, 0 ), Math.PI);
-      // model.rotation.setFromQuaternion(quat);
       model.children[0].rotateX(Math.PI/2);
       model.children[0].rotateY(Math.PI);
       console.log("turtle", model);
