@@ -1,5 +1,5 @@
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { Group, Vector3, AnimationMixer, AnimationClip, Scene, Matrix4 } from 'three';
+import { Group, Vector3, AnimationMixer, AnimationClip, Scene, Matrix4, Quaternion } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
@@ -98,16 +98,21 @@ class Turtle extends Group {
 
       //copy rotations into state
       model.rotation.reorder('YXZ');
-      console.log(model);
 
       // model.rotation.z = Math.PI;
       // model.geometry.translate(model.position.x - model.geometry.center.x, model.position.y - model.geometry.center.y, model.position.z - model.geometry.center.z);
-      model.rotation.x = Math.PI/2;
-      model.rotation.y = Math.PI;
 
-      this.state.xRotate = model.rotation.x;
-      this.state.yRotate = model.rotation.y;
-      this.state.zRotate = model.rotation.z;
+
+      this.state.xRotate = 0;
+      this.state.yRotate = 0;
+      this.state.zRotate = 0;
+      // let quat = new Quaternion();
+      // quat.setFromAxisAngle( new Vector3( 1/2, 1, 0 ), Math.PI);
+      // model.rotation.setFromQuaternion(quat);
+      model.children[0].rotateX(Math.PI/2);
+      model.children[0].rotateY(Math.PI);
+      console.log("turtle", model);
+
 
       this.state.animation = gltf.animations[0];
 
@@ -203,39 +208,9 @@ update(timeStamp) {
                       this.state.xRotate += 0.005;
                   }
           
-                  // let animation = this.state.animation.clone();
-                  // let track =  animation.tracks[0];
-                  // let values = track.values;
-          
-                  // let vals = [0,13,26,39,58,72,86,103,104,117,136,150,168,169];
-                  // // let vals = [];
-                  // // if (this.state.bird === 'Stork') {
-                  // //   vals = [0,13,26,39,58,72,86,103,104,117,136,150,168,169];
-                  // // }
-                  // // else if (this.state.bird === 'Parrot'){
-                  // //   vals = [0,12,24,37,50,67,80,93,106,119];
-                  // // }
-                  // // else if (this.state.bird === 'Flamingo') {
-                  // //   vals = [5,18,33,48,63,79,94,109,124,139,152,165,178,191,201];
-                  // // }
-          
-                  // for (let i = 0; i < values.length; i++) {
-                  //   if (vals.includes(i)) {
-                  //     values[i] = 1;
-                  //   }
-                  //   else {
-                  //     values[i] = 0;
-                  //   }
-                  // }
           
                   this.state.speed = 1500;
 
-                  // if (!this.state.repeated) {
-                  //   const action = this.state.mixer.clipAction(animation);
-                  //   this.state.action = this.state.action.crossFadeTo(action, 1, true);
-                  //   this.state.action.play();
-                  //   this.state.newAnimate = true;
-                  // }
           
                   // Update terrain position
                   if (this.state.parent.state.y <= 100) {
