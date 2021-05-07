@@ -1,4 +1,4 @@
-import { Group, Color, PlaneBufferGeometry, VertexColors, PlaneGeometry, MeshStandardMaterial, MeshLambertMaterial, Mesh, TextureLoader} from 'three';
+import { Group, Color, PlaneBufferGeometry, VertexColors, PlaneGeometry, MeshStandardMaterial, MeshLambertMaterial, Mesh, TextureLoader, Vector3} from 'three';
 import  SimplexNoise  from 'simplex-noise';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
@@ -115,6 +115,11 @@ class TerrainPlane extends Group {
         let baby = new Baby();
         let baby2 = new Baby();
         let baby3 = new Baby();
+        let position = new Vector3();
+        baby.getWorldPosition(position);
+        console.log(baby.real_position);
+        // console.log(baby.geometry);
+        
         this.add(baby);
         this.add(baby2);
         this.add(baby3);

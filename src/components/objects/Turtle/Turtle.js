@@ -100,7 +100,8 @@ class Turtle extends Group {
       this.state.zRotate = 0;
       model.children[0].rotateX(Math.PI/2);
       model.children[0].rotateY(Math.PI);
-      console.log("turtle", model);
+      console.log("turtle", model.children[0].getWorldPosition());
+
 
 
       this.state.animation = gltf.animations[0];

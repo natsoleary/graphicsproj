@@ -1,5 +1,5 @@
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { Group } from 'three';
+import { Group, Box3 } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import MODEL from './NOVELO_TURTLE.obj';
@@ -23,14 +23,22 @@ class Baby extends Group {
 
         object.scale.multiplyScalar(0.01);
         this.baby = object;
-        this.baby.position.set(Math.random() * 2000 - 1000, 50 + Math.random() * 100, Math.random() * 2000 - 1000);
+        this.name = "Baby";
+        this.baby.position.set(Math.random() * 2000 - 1000, 100 + Math.random() * 100, Math.random() * 2000 - 1000);
+        // console.log(this.baby.position);
         this.add(this.baby);
+        this.real_position = this.baby.position;
 
         
         // console.log(this.babyModel);
         // this.add(object);
       });
     });
+    this.boundingBox = new Box3();
+    }
+    update() {
+        this.boundingBox.setFromObject(this);
+
     }
 
 }

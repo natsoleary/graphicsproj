@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color, FogExp2, Fog  } from 'three';
-import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager} from 'objects';
+import { Scene, Color, FogExp2, Fog, Vector3  } from 'three';
+import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
@@ -33,10 +33,22 @@ class SeedScene extends Scene {
         // const shark = new Shark();
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
-        var seafloor = new Seafloor(this);
+        // var seafloor = new Seafloor(this);
         // var terrain = new TerrainPlane(this);
         var terrainMan = new TerrainManager(this);
+        var baby = new Baby(this);
+        let babyposition = new Vector3();
+        let turtleposition = new Vector3();
+        baby.getWorldPosition(babyposition);
+        turtle.getWorldPosition(turtleposition);
+        console.log(babyposition, turtleposition);
+        console.log(baby.children);
         this.add(turtle, lights, terrainMan);
+        // for (let i = 0; i < 20; i++) {
+        //     let baby = new Baby(this);
+        //     this.add(baby);
+        //     console.log(baby);
+        // }
 
         // Populate GUI
     }
