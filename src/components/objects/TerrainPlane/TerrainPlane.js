@@ -112,12 +112,12 @@ class TerrainPlane extends Group {
         // this.state.babyModel.position.x = 5;
         // this.state.babyModel.position.z = 5;
         // this.state.babyModel.position.y = -180;
-        let baby = new Baby();
-        let baby2 = new Baby();
-        let baby3 = new Baby();
-        let position = new Vector3();
-        baby.getWorldPosition(position);
-        console.log(baby.real_position);
+        let baby = new Baby(this);
+        let baby2 = new Baby(this);
+        let baby3 = new Baby(this);
+        console.log("wtf", baby.real_position);
+        console.log("parent route", this.state.babyModel);
+        console.log("model route", baby.state.model);
         // console.log(baby.geometry);
         
         this.add(baby);
