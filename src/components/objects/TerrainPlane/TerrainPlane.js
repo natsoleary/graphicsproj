@@ -27,8 +27,6 @@ class TerrainPlane extends Group {
             xOffset: xOffset,
             yOffset: yOffset,
             zOffset: zOffset,
-            babyModel: null,
-
         };
         this.brown = 0x964B00;
         this.tan = 0xD2B48C;
@@ -54,6 +52,7 @@ class TerrainPlane extends Group {
         this.geometry = planeGeometry;
         this.geometry.verticesNeedUpdate = true;
         this.geometry.colorsNeedUpdate = true;
+        this.babies = [];
 
         // get perline noise height map and update the geometry
         this.heightMap = this.generateTexture(xOffset, zOffset);
@@ -108,21 +107,15 @@ class TerrainPlane extends Group {
 
     }
     spawnBabies() {
-        // console.log("in here", this.state.babyModel)
-        // this.state.babyModel.position.x = 5;
-        // this.state.babyModel.position.z = 5;
-        // this.state.babyModel.position.y = -180;
         let baby = new Baby(this);
         let baby2 = new Baby(this);
         let baby3 = new Baby(this);
-        console.log("wtf", baby.real_position);
-        console.log("parent route", this.state.babyModel);
-        console.log("model route", baby.state.model);
-        // console.log(baby.geometry);
-        
         this.add(baby);
         this.add(baby2);
         this.add(baby3);
+        this.babies.push(baby);
+        this.babies.push(baby2);
+        this.babies.push(baby3);
 
         
        
@@ -240,6 +233,12 @@ class TerrainPlane extends Group {
         this.position.z = z;
         this.position.y = y;
         this.updateMatrix();
+      }
+    update(xneg, zneg, offset) {
+        for (let baby of this.babies) {
+            baby.update(xneg, zneg, offset);
+        }
+
       }
 
 }

@@ -102,6 +102,8 @@ class TerrainManager extends Group {
       // make/delete chunks as needed
       // Initialized as a 0 but are actually supposed to be PlaneGeometry objects
       let plane_geos = [0, 0, 0];
+      let xneg = false;
+      let zneg = true;
       let need_update = (z > this.state.chunkWidth/2) || (z < -this.state.chunkWidth/2)
       || (x > this.state.chunkWidth/2) || (x < -this.state.chunkWidth/2);
 
@@ -139,6 +141,7 @@ class TerrainManager extends Group {
 
       }
       else if(z < -this.state.chunkWidth/2) {
+        zneg = true;
         this.state.currentZOffset -= this.state.chunkWidth;
         this.state.parent.state.z += this.state.chunkWidth;
 
@@ -175,6 +178,7 @@ class TerrainManager extends Group {
 
 
       else if(x > this.state.chunkWidth/2) {
+        
 
         this.state.currentXOffset += this.state.chunkWidth;
         this.state.parent.state.x -= this.state.chunkWidth;
@@ -211,6 +215,7 @@ class TerrainManager extends Group {
       }
 
       else if(x < -this.state.chunkWidth/2) {
+        xneg = true;
         this.state.currentXOffset -= this.state.chunkWidth;
         this.state.parent.state.x += this.state.chunkWidth;
 
@@ -266,6 +271,9 @@ class TerrainManager extends Group {
       this.position.z = -z;
       for (let chunk of this.state.terrain_chunks) {
         // chunk.spawnBabies();
+      }
+      for (let chunk of this.state.terrain_chunks) {
+        chunk.update(xneg, zneg, this.state.chunkWidth);
       }
 
     }
