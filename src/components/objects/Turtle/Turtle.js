@@ -1,5 +1,5 @@
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { Group, Vector3, AnimationMixer, AnimationClip, Scene, Matrix4, Quaternion } from 'three';
+import { Group, Vector3, AnimationMixer, AnimationClip, Scene, Matrix4, Quaternion, Box3 } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
@@ -11,6 +11,9 @@ class Turtle extends Group {
         super();
         //const loader = new OBJLoader();
         this.name = 'turtle';
+        this.boundingBox = new Box3();
+        this.boundingBox.min = new Vector3(-5, -5, -5);
+        this.boundingBox.max = new Vector3(5, 5, 5);
         this.state = {
             xRotate: 0,
             yRotate: 0,
@@ -100,7 +103,10 @@ class Turtle extends Group {
       this.state.zRotate = 0;
       model.children[0].rotateX(Math.PI/2);
       model.children[0].rotateY(Math.PI);
-      console.log("turtle", model.children[0].getWorldPosition());
+      model.matrixAutoUpdate = true;
+      model.children[0].matrixAutoUpdate = true;;
+      // console.log("turtle", model.children[0].getWorldPosition());
+    
 
 
 
@@ -169,10 +175,24 @@ class Turtle extends Group {
 
 //"Model 50A - Hatchling Hawksbill sea turtle" (https://skfb.ly/6QTKp) by DigitalLife3D is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).
 
-update(timeStamp) {
-
-
-     
+update(timeStamp, x, y, z) {
+            if (this.state.model != null) {
+            this.state.model.updateMatrix();
+            this.state.model.children[0].updateMatrix();
+            let worldpos =new Vector3(0,0,0);
+            let worldposother = new Vector3(0,0,0);
+            this.state.model.children[0].getWorldPosition(worldpos);
+            this.state.model.getWorldPosition(worldposother);
+            // console.log(worldpos, worldposother);
+            }
+              // this.boundingBox.setFromObject(this.state.model);
+              // this.boundingBox.min.x -= 100;
+              // this.boundingBox.min.y -= 100;
+              // this.boundingBox.min.z -= 100;
+              // this.boundingBox.max.x += 100;
+              // this.boundingBox.max.y += 100;
+              // this.boundingBox.max.z += 100;
+              // console.log(this.boundingBox);
               if (this.state.model != null) {
                 // if the up arrow key is pressed
                 if (this.state.keysPressed[38]) {

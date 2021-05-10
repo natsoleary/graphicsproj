@@ -1,4 +1,4 @@
-import { Group, Color, PlaneBufferGeometry, VertexColors, PlaneGeometry, MeshStandardMaterial, MeshLambertMaterial, Mesh, TextureLoader, Vector3} from 'three';
+import { Group, Color, PlaneBufferGeometry, VertexColors, PlaneGeometry, MeshStandardMaterial, MeshLambertMaterial, Mesh, TextureLoader, Vector3, Box3} from 'three';
 import  SimplexNoise  from 'simplex-noise';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
@@ -44,6 +44,8 @@ class TerrainPlane extends Group {
         this.fifthlightest = 0xa384ff;
         this.darkest = 0x7d51ff;
         this.seconddarkest = 0x906bff;
+        this.matrixAutoUpdate = true;
+
 
         this.state.xOffset = xOffset*parent.state.chunkVertWidth/parent.state.chunkWidth;
         this.state.zOffset = zOffset*parent.state.chunkVertWidth/parent.state.chunkWidth;
@@ -107,30 +109,24 @@ class TerrainPlane extends Group {
 
     }
     spawnBabies() {
-        // console.log("in here", this.state.babyModel)
-        // this.state.babyModel.position.x = 5;
-        // this.state.babyModel.position.z = 5;
-        // this.state.babyModel.position.y = -180;
-        let baby = new Baby();
-        let baby2 = new Baby();
-        let baby3 = new Baby();
-        let position = new Vector3();
-        baby.getWorldPosition(position);
-        console.log(baby.real_position);
-        // console.log(baby.geometry);
+        let baby = new Baby(this);
+        let baby2 = new Baby(this);
+        let baby3 = new Baby(this);
         
         this.add(baby);
         this.add(baby2);
         this.add(baby3);
-        this.babies.push(baby);
-        this.babies.push(baby2);
-        this.babies.push(baby3);
+        this.state.parent.state.parent.collidableMeshList.push(baby);
+        this.state.parent.state.parent.collidableMeshList.push(baby2);
+        this.state.parent.state.parent.collidableMeshList.push(baby3);
+
+
 
         
        
     }
 
-    updateTerrainGeo() {
+    updateTerrainGeo() {///
         //assign vert data from the canvas
         for(let j=0; j<this.heightMap.length; j++) {
             for (let i = 0; i < this.heightMap[0].length; i++) {
@@ -205,7 +201,6 @@ class TerrainPlane extends Group {
     //generate noise
     generateTexture() {
 
-        // console.log("terrain with offset " + this.state.xOffset + " " + this.state.zOffset)
         // make 2d array
         var simplex = this.state.parent.state.simplex;
 
@@ -242,13 +237,10 @@ class TerrainPlane extends Group {
         this.position.z = z;
         this.position.y = y;
         this.updateMatrix();
-      }
-    update(xneg, zneg, offset) {
-        for (let baby of this.babies) {
-            baby.update(xneg, zneg, offset);
-        }
+
 
       }
+
 
 }
 
