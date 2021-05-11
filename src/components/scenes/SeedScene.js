@@ -39,6 +39,10 @@ class SeedScene extends Scene {
         // const land = new Land();
         // const flower = new Flower(this);
         // const shark = new Shark();
+    
+        // const baby = new Baby(this);
+        // baby.position.set(0, 0, -4);
+        // baby.visible = false;
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
         // var seafloor = new Seafloor(this);
@@ -48,6 +52,7 @@ class SeedScene extends Scene {
         this.turtleboundingbox = turtle.boundingBox;
 
         var terrainMan = new TerrainManager(this);
+        terrainMan.update(0, this.state.x, this.state.y, this.state.z);
         this.onlydoonce = false;
 
         this.add(turtle, lights, terrainMan);
