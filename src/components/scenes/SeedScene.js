@@ -8,20 +8,19 @@ class SeedScene extends Scene {
     constructor(camera) {
         // Call parent Scene() constructor
         super();
+
         // Init state
-        this.lives = 3;
-        this.babies = 0;
         this.state = {
             updateList: [],
             x: 0,
             y: 0,
             z: 0,
         };
-        this.babyadded = false;
         this.collidableMeshList = [];
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
         const color = 0x84e0ff;
+        const density = 0.01;
         const near = 10;
         const far = 1200;
         this.fog = new Fog(color, near, far);
@@ -95,16 +94,12 @@ class SeedScene extends Scene {
                         console.log("hit");
                         object.delete();
                         this.collidableMeshList.splice(index, 1);
-                        this.babies += 1;
                         return;
                     }
                     index++;
                 }
             }
         }
-    }
-    getBabies() {
-        return this.babies;
     }
     }
 

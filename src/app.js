@@ -9,8 +9,6 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
-import coralIcon from './components/icons/coral/coral.png'
-
 import './app.css'
 
 // Initialize core ThreeJS components
@@ -40,36 +38,6 @@ controls.enablePan = false;
 controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
-
-// lives and points count
-let babiesCollected = 0;
-let corals = 3;
-
-var babiesDiv = document.createElement('div');
-babiesDiv.id = 'babies';
-babiesDiv.innerHTML = 'Babies: ' + babiesCollected;
-document.body.appendChild(babiesDiv);
-
-
-var lifeDiv = document.createElement('div');
-lifeDiv.id = 'lives';
-lifeDiv.innerHTML = 'Lives: ';
-document.body.appendChild(lifeDiv);
-
-
-let coralDiv = document.createElement('div');
-coralDiv.id = 'coral';
-
-
-for (let i = 0; i < corals; i++) {
-    let coralImg = document.createElement('img');
-    coralImg.src = coralIcon;
-    coralDiv.appendChild(coralImg);
-}
-
-document.body.appendChild(coralDiv);
-
-
 
 
 // start screen 
@@ -107,12 +75,9 @@ document.body.appendChild(coralDiv);
         beginContentButton.innerHTML = 'Play!';
         beginContent.appendChild(beginContentButton);
 
-
-
         // Begin game
         beginContentButton.onclick = function () {
             beginContainer.style.display = 'none';
-
         };
 
 
@@ -279,10 +244,6 @@ const onAnimationFrameHandler = (timeStamp) => {
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
-    babiesCollected = scene.getBabies();
-    document.getElementById('babies').innerHTML = 'Babies: ' + babiesCollected;
-
-    
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

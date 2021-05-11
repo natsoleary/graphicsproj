@@ -9,7 +9,7 @@
     /*font-family: 'Work Sans', sans-serif;*?*/
 }
 
-#babies,
+/* #score,
 #lives {
     position: absolute;
     width: 175px;
@@ -18,28 +18,35 @@
     font-size: 30px;
     color: white;
     padding: 20px 20px 20px 30px;
-}
+} */
 
-#babies {
+/* #score {
     top: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #lives {
     top: 60px;
-}
+} */
 
-#coral {
+#item {
     position: absolute;
-    top: 87px;
-    left: 150px;
-    display: flex;
+    width: 100px;
+    height: 100px;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: white;
 }
 
+<<<<<<< HEAD
 #coral img {
     height: 30px;
     width: 30px;
     padding-right: 4px;
 }
+=======
+>>>>>>> parent of 8e5f8b0... submission
 #begin-container,
 #end-container,
 #about-container,
