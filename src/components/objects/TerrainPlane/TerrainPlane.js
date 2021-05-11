@@ -196,7 +196,7 @@ class TerrainPlane extends Group {
         var x = vert3.x;
         var z = vert3.y;
         }
-        console.log(x, y, z);
+        //console.log(x, y, z);
     
         if (y == 0)
         {
