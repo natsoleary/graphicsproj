@@ -27,6 +27,7 @@ class TerrainPlane extends Group {
             xOffset: xOffset,
             yOffset: yOffset,
             zOffset: zOffset,
+            octaves: 10,
         };
         this.brown = 0x964B00;
         this.tan = 0xD2B48C;
@@ -186,7 +187,7 @@ class TerrainPlane extends Group {
     //stack some noisefields together
     octave(nx,ny,octaves, simplex, xOffset, zOffset) {
         let val = 0;
-        let freq = this.state.parent.state.freq;
+        let freq = 1;
         let max = 0;
         let amp = 1; //this.state.amplitude;
         for(let i=0; i<octaves; i++) {
@@ -213,7 +214,7 @@ class TerrainPlane extends Group {
             for(let j=0; j<this.state.chunkVertWidth; j++) {
                 let v =  this.octave((i - this.state.chunkVertWidth - this.state.xOffset + 1 + Math.floor(this.state.xOffset/this.state.chunkVertWidth))/(this.state.totalVertWidth-3),
                                      (j + this.state.chunkVertWidth + this.state.zOffset - 1 - Math.floor(this.state.zOffset/this.state.chunkVertWidth))/(this.state.totalVertWidth-3),
-                                      this.state.parent.state.octaves, simplex)
+                                      this.state.octaves, simplex)
                 canvas[i][j] = v
             }
         }

@@ -1,6 +1,6 @@
 {
   "name": "turtle-trek",
-  "repository": "natsoleary/turtletrek",
+  "repository": "turtletrek",
   "version": "0.1.0",
   "title": "Turtle Trek",
   "description": "You're a turtle, swimming through the ocean to collect your babies without getting eaten",
@@ -10,11 +10,12 @@
     "three.js",
     "COS 426",
     "ivy league",
-    "keyword1",
-    "keyword2",
-    "...",
-    "this last entry CANNOT have a comma after it ->"
+    "turtle",
+    "game",
+    "infinite terrain",
+    "collection"
   ],
+  "homepage": "https://natsoleary.github.io/turtletrek/",
   "scripts": {
     "start": "webpack-dev-server --mode development --output-public-path \"\"",
     "prebuild": "rimraf ./build && mkdirp ./build",

@@ -176,23 +176,6 @@ class Turtle extends Group {
 //"Model 50A - Hatchling Hawksbill sea turtle" (https://skfb.ly/6QTKp) by DigitalLife3D is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).
 
 update(timeStamp, x, y, z) {
-            if (this.state.model != null) {
-            this.state.model.updateMatrix();
-            this.state.model.children[0].updateMatrix();
-            let worldpos =new Vector3(0,0,0);
-            let worldposother = new Vector3(0,0,0);
-            this.state.model.children[0].getWorldPosition(worldpos);
-            this.state.model.getWorldPosition(worldposother);
-            // console.log(worldpos, worldposother);
-            }
-              // this.boundingBox.setFromObject(this.state.model);
-              // this.boundingBox.min.x -= 100;
-              // this.boundingBox.min.y -= 100;
-              // this.boundingBox.min.z -= 100;
-              // this.boundingBox.max.x += 100;
-              // this.boundingBox.max.y += 100;
-              // this.boundingBox.max.z += 100;
-              // console.log(this.boundingBox);
               if (this.state.model != null) {
                 // if the up arrow key is pressed
                 if (this.state.keysPressed[38]) {
