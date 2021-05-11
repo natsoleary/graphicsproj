@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry  } from 'three';
-import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby} from 'objects';
+import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
@@ -19,6 +19,7 @@ class SeedScene extends Scene {
         };
         this.babyadded = false;
         this.collidableMeshList = [];
+        this.obstacleList = [];
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
         const color = 0x84e0ff;
@@ -71,8 +72,36 @@ class SeedScene extends Scene {
             }
         }
         this.detectCollisions();
+        this.detectObstacles();
 
     }
+    detectObstacles() {
+        var originPoint = this.boundbox.position.clone();
+        for (var vertexIndex = 0; vertexIndex < this.box.vertices.length; vertexIndex++) {		
+            var localVertex = this.box.vertices[vertexIndex].clone();
+            var globalVertex = localVertex.applyMatrix4( this.boundbox.matrix );
+            var directionVector = globalVertex.sub( this.boundbox.position );
+            var ray = new Raycaster( originPoint, directionVector.clone().normalize() );
+            if (this.obstacleList.length > 0) {
+                // console.log(this.collidableMeshList);
+                var collisionResults = ray.intersectObjects( this.obstacleList );
+                let index = 0;
+                for (let object of this.obstacleList) {
+                    var collisionResults = ray.intersectObject(object.BB);
+                    if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
+                        console.log("ouch");
+                        object.delete();
+                        this.obstacleList.splice(index, 1);
+                        this.lives -= 1;
+                        // console.log(this.lives);
+                        return;
+                    }
+                    index++;
+                }
+            }
+        }
+    }
+
     detectCollisions() {
         var originPoint = this.boundbox.position.clone();
         for (var vertexIndex = 0; vertexIndex < this.box.vertices.length; vertexIndex++) {		
@@ -100,6 +129,9 @@ class SeedScene extends Scene {
     }
     getBabies() {
         return this.babies;
+    }
+    getLives() {
+        return this.lives;
     }
     }
 

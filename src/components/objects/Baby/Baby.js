@@ -17,9 +17,9 @@ class Baby extends Group {
         super();
         this.name = "Baby";
         this.parent = parent;
-        let x = Math.random() * 1000;
+        let x = Math.random() * 1500;
         let y = 70 + Math.random() * 50;
-        let z = Math.random() * 1000;
+        let z = Math.random() * 1500;
         this.position.set(x,y,z)
         this.box = new BoxGeometry(10, 10, 10);
         this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );

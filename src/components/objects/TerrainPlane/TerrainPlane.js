@@ -6,6 +6,7 @@ import MODEL from './NOVELO_TURTLE.obj';
 import MAT from './NOVELO_TURTLE.mtl';
 import SAND from './sandgrain.jpeg';
 import {Baby} from '../Baby';
+import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
 
 
@@ -58,6 +59,7 @@ class TerrainPlane extends Group {
         this.geometry.colorsNeedUpdate = true;
         this.babies = [];
         this.seaweeds = [];
+        this.obstacles = [];
 
   
         // get perline noise height map and update the geometry
@@ -107,8 +109,7 @@ class TerrainPlane extends Group {
     // console.log("from state", this.state.babyModel);
 
         this.spawnBabies();
-        // this.spawnSeaweed();
-        
+        this.spawnObstacles();        
         
 
         // Add self to parent's update list
@@ -132,6 +133,29 @@ class TerrainPlane extends Group {
         this.babies.push(baby2);
         this.babies.push(baby3);  
        
+    }
+    spawnObstacles() {
+        for (let i = 0; i < 20; i++) {
+            let boot = new Boot(this);
+            this.add(boot);
+            this.state.parent.state.parent.obstacleList.push(boot);
+            this.obstacles.push(boot);
+
+        }
+        // let boot = new Boot();
+        // let boot2 = new Boot();
+        // let boot3 = new Boot();
+        // this.add(boot);
+        // this.add(boot2);
+        // this.add(boot3);
+        // this.state.parent.state.parent.obstacleList.push(boot);
+        // this.state.parent.state.parent.obstacleList.push(boot2);
+        // this.state.parent.state.parent.obstacleList.push(boot3);
+
+
+        // this.obstacles.push(boot);
+        // this.obstacles.push(boot2);
+        // this.obstacles.push(boot3);      
     }
 
     spawnSeaweed() {
@@ -311,10 +335,13 @@ class TerrainPlane extends Group {
       this.material.dispose();
       this.remove(this.children[0]);
       this.remove(this.children[1]);
-      this.remove
+    //   this.remove
       for (let baby of this.babies) {
           baby.disposeOf();
       }
+      for (let obstacle of this.obstacles) {
+        obstacle.disposeOf();
+    }
 
       return this.geometry;
     }
@@ -326,11 +353,11 @@ class TerrainPlane extends Group {
 
 
       }
-    update(xneg, zneg, offset) {
-        for (let sea of this.seaweeds) {
-            sea.update(xneg, zneg, offset);   
-        }
-    }
+    // update(xneg, zneg, offset) {
+    //     for (let sea of this.seaweeds) {
+    //         sea.update(xneg, zneg, offset);   
+    //     }
+    // }
 
 
 }

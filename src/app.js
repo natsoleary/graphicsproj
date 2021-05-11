@@ -44,6 +44,7 @@
  // lives and points count
  let babiesCollected = 0;
  let corals = 3;
+ let pastcorals = 3;
  
  var babiesDiv = document.createElement('div');
  babiesDiv.id = 'babies';
@@ -281,6 +282,13 @@
      window.requestAnimationFrame(onAnimationFrameHandler);
      babiesCollected = scene.getBabies();
      document.getElementById('babies').innerHTML = 'Babies: ' + babiesCollected;
+     corals = scene.getLives();
+     if (corals < pastcorals) {
+         console.log("got here");
+        coralDiv.removeChild(coralDiv.lastChild);
+     }
+     pastcorals = corals;
+
  
      
  };
