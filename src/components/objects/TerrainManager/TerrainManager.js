@@ -25,7 +25,6 @@ class TerrainManager extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             parent: parent,
             terrain_chunks: [],
             chunkWidth: chunkPxWidth,
@@ -36,8 +35,8 @@ class TerrainManager extends Group {
             currentZOffset: 0,
             power: 1,
             octaves: 16,
-            exaggeration: 20,
-            ogExaggeration: 20,
+            exaggeration: 10,
+            ogExaggeration: 10,
             randSeed: 4,
             freq: 1,
             terraced: false,
@@ -46,6 +45,9 @@ class TerrainManager extends Group {
         };
 
         this.state.simplex = new SimplexNoise(this.state.randSeed);
+        this.prevx = 0;
+        this.prevy = 0;
+        this.prevz = 0;
 
         const coordinates = [
           [this.state.chunkWidth, 0, this.state.chunkWidth],
@@ -269,12 +271,14 @@ class TerrainManager extends Group {
       this.position.x = -x;
       this.position.y = y - startYBelow;
       this.position.z = -z;
-      for (let chunk of this.state.terrain_chunks) {
-        // chunk.spawnBabies();
+      if (this.prevx != null) {
+        let deltax = x - this.prevx;
+        let deltay = y - this.prevy;
+        let deltaz = z - this.prevz;
       }
-      for (let chunk of this.state.terrain_chunks) {
-        chunk.update(xneg, zneg, this.state.chunkWidth);
-      }
+      this.prevx = x;
+      this.prevy = y;
+      this.prevz = z;
 
     }
 
