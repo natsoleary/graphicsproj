@@ -107,7 +107,7 @@ class TerrainPlane extends Group {
     // console.log("from state", this.state.babyModel);
 
         this.spawnBabies();
-        this.spawnSeaweed();
+        // this.spawnSeaweed();
         
         
 
@@ -245,7 +245,7 @@ class TerrainPlane extends Group {
         if (max <= 115) return f.color.set(this.otherlavender);
      
         //otherwise, return white
-        else return f.color.set(this.pink);
+        else return f.color.set(this.otherlavender);
 
     })
 
@@ -311,6 +311,10 @@ class TerrainPlane extends Group {
       this.material.dispose();
       this.remove(this.children[0]);
       this.remove(this.children[1]);
+      this.remove
+      for (let baby of this.babies) {
+          baby.disposeOf();
+      }
 
       return this.geometry;
     }

@@ -9,7 +9,7 @@
     /*font-family: 'Work Sans', sans-serif;*?*/
 }
 
-/* #score,
+#babies,
 #lives {
     position: absolute;
     width: 175px;
@@ -18,27 +18,28 @@
     font-size: 30px;
     color: white;
     padding: 20px 20px 20px 30px;
-} */
+}
 
-/* #score {
+#babies {
     top: 20px;
-    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #lives {
     top: 60px;
-} */
-
-#item {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 20px;
-    right: 20px;
-    font-size: 28px;
-    color: white;
 }
 
+#coral {
+    position: absolute;
+    top: 87px;
+    left: 150px;
+    display: flex;
+}
+
+#coral img {
+    height: 25px;
+    width: 25px;
+    padding-right: 4px;
+}
 #begin-container,
 #end-container,
 #about-container,
