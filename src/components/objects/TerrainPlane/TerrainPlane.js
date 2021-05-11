@@ -6,6 +6,7 @@ import MODEL from './NOVELO_TURTLE.obj';
 import MAT from './NOVELO_TURTLE.mtl';
 import SAND from './sandgrain.jpeg';
 import {Baby} from '../Baby';
+import {Seaweed} from '../Seaweed';
 
 
 const terrainSize = {width: 1000, height: 1000, vertsWidth: 100, vertsHeight: 100};
@@ -56,7 +57,9 @@ class TerrainPlane extends Group {
         this.geometry.verticesNeedUpdate = true;
         this.geometry.colorsNeedUpdate = true;
         this.babies = [];
+        this.seaweeds = [];
 
+  
         // get perline noise height map and update the geometry
         this.heightMap = this.generateTexture(xOffset, zOffset);
         this.updateTerrainGeo();
@@ -104,6 +107,9 @@ class TerrainPlane extends Group {
     // console.log("from state", this.state.babyModel);
 
         this.spawnBabies();
+        this.spawnSeaweed();
+        
+        
 
         // Add self to parent's update list
         // parent.addToUpdateList(this);
@@ -122,9 +128,84 @@ class TerrainPlane extends Group {
         this.state.parent.state.parent.collidableMeshList.push(baby3);
 
 
+        this.babies.push(baby);
+        this.babies.push(baby2);
+        this.babies.push(baby3);  
+       
+    }
+
+    spawnSeaweed() {
+        var i = Math.round(Math.random()*(this.heightMap[0].length - 2));
+        var j = Math.round(Math.random()*(this.heightMap.length -2));
+        var index = j*(this.heightMap.length - 2) + i;
+        //console.log(index);
+        //const v1 = this.geometry.vertices[index];
+        //console.log(v1.z);
+        var random = Math.round(Math.random()*(this.geometry.faces.length - 1));
+        //console.log(random);
+        var face = this.geometry.faces[random];
+        //console.log(face);
+        var vert1 = this.geometry.vertices[face.a];
+        var vert2 = this.geometry.vertices[face.b];
+        var vert3 = this.geometry.vertices[face.c];
+
+     
+
+        //just don't set it if z is 0...
+        // find a pattern to the fuck ups and fix them
 
         
-       
+        var onebig = false;
+        var twobig = false;
+        var threebig = false;
+        var closest;
+
+     
+        if (vert1.z > vert2.z) {
+          closest = vert1.z;
+          onebig = true;
+        }
+        else {
+          closest = vert2.z;
+          twobig = true;
+        }
+        if (vert3.z > closest) {
+          closest = vert3.z;
+          threebig = true;
+          twobig = false;
+          onebig = false;
+        }
+    
+        var y;
+        // if (closest > 30 && closest < 40)
+        // {
+        //     y = closest + 30;
+        // }
+        y = closest;
+        if (onebig)
+        {
+        var x = vert1.x;
+        var z = vert1.y;
+        }
+        if (twobig)
+        {
+        var x = vert2.x;
+        var z = vert2.y;
+        }
+        if (threebig)
+        {
+        var x = vert3.x;
+        var z = vert3.y;
+        }
+        //console.log(x, y, z);
+    
+        if (y == 0)
+        {
+        let sea1 = new Seaweed(this, x, y, z);
+        this.add(sea1);
+        this.seaweeds.push(sea1);
+        }
+        
     }
 
     updateTerrainGeo() {///
@@ -241,6 +322,11 @@ class TerrainPlane extends Group {
 
 
       }
+    update(xneg, zneg, offset) {
+        for (let sea of this.seaweeds) {
+            sea.update(xneg, zneg, offset);   
+        }
+    }
 
 
 }
