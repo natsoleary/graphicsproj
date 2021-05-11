@@ -8,19 +8,20 @@ class SeedScene extends Scene {
     constructor(camera) {
         // Call parent Scene() constructor
         super();
-
         // Init state
+        this.lives = 3;
+        this.babies = 0;
         this.state = {
             updateList: [],
             x: 0,
             y: 0,
             z: 0,
         };
+        this.babyadded = false;
         this.collidableMeshList = [];
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
         const color = 0x84e0ff;
-        const density = 0.01;
         const near = 10;
         const far = 1200;
         this.fog = new Fog(color, near, far);
@@ -38,10 +39,6 @@ class SeedScene extends Scene {
         // const land = new Land();
         // const flower = new Flower(this);
         // const shark = new Shark();
-    
-        // const baby = new Baby(this);
-        // baby.position.set(0, 0, -4);
-        // baby.visible = false;
         const lights = new BasicLights();
         const turtle = new Turtle(this, camera);
         // var seafloor = new Seafloor(this);
@@ -51,7 +48,6 @@ class SeedScene extends Scene {
         this.turtleboundingbox = turtle.boundingBox;
 
         var terrainMan = new TerrainManager(this);
-        terrainMan.update(0, this.state.x, this.state.y, this.state.z);
         this.onlydoonce = false;
 
         this.add(turtle, lights, terrainMan);
@@ -94,12 +90,16 @@ class SeedScene extends Scene {
                         console.log("hit");
                         object.delete();
                         this.collidableMeshList.splice(index, 1);
+                        this.babies += 1;
                         return;
                     }
                     index++;
                 }
             }
         }
+    }
+    getBabies() {
+        return this.babies;
     }
     }
 

@@ -17,17 +17,17 @@ class Baby extends Group {
         super();
         this.name = "Baby";
         this.parent = parent;
-        let x = Math.random() * 100;
-        let y = 70 + Math.random() * 100;
-        let z = Math.random() * 100;
+        let x = Math.random() * 1000;
+        let y = 70 + Math.random() * 50;
+        let z = Math.random() * 1000;
         this.position.set(x,y,z)
-        let box = new BoxGeometry(10, 10, 10);
-        var boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
-        var boundbox = new Mesh( box, boxmaterial );
+        this.box = new BoxGeometry(10, 10, 10);
+        this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
+        var boundbox = new Mesh( this.box, this.boxmaterial );
         boundbox.position.set(x,y,z);
         boundbox.visible = false;
         this.BB = boundbox;
-        this.add(boundbox);
+        this.add(this.BB);
         const loader = new OBJLoader();
 
         var mtlLoader = new MTLLoader();
@@ -46,7 +46,18 @@ class Baby extends Group {
 
 
     }
+    disposeOf() {
+      this.boxmaterial.dispose();
+      this.box.dispose();
+      this.remove(this.BB);
+      this.remove(this.baby);
+
+      
+    }
     delete() {
+      this.boxmaterial.dispose();
+      this.box.dispose();
+      this.remove(this.BB);
       this.parent.remove(this);
 
       this.remove(this.baby);
