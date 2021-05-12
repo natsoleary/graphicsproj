@@ -1,1 +1,0 @@
-export { default as Seaweed } from './seaweed.js';
