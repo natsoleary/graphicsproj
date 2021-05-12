@@ -255,6 +255,10 @@ class TerrainManager extends Group {
         this.state.terrain_chunks[8].setTerrainPosition(-this.state.chunkWidth, 0, -this.state.chunkWidth)
       }
 
+//       for (let chunk of this.state.terrain_chunks) {
+//         chunk.update(xneg, zneg, this.state.chunkWidth);
+//       }
+      
       this.position.x = -x;
       this.position.y = y - startYBelow;
       this.position.z = -z;
