@@ -8,6 +8,8 @@ import SAND from './sandgrain.jpeg';
 import {Baby} from '../Baby';
 import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
+import {Fish} from '../Fishies';
+import {JellyFish} from '../JellyFish';
 
 
 const terrainSize = {width: 1000, height: 1000, vertsWidth: 100, vertsHeight: 100};
@@ -60,6 +62,8 @@ class TerrainPlane extends Group {
         this.babies = [];
         this.seaweeds = [];
         this.obstacles = [];
+        this.fishies = [];
+        this.jellies = [];
 
   
         // get perline noise height map and update the geometry
@@ -110,6 +114,10 @@ class TerrainPlane extends Group {
 
         this.spawnBabies();
         this.spawnObstacles();        
+        // this.spawnSeaweed();
+        // this.spawnJelly();
+        // this.spawnFish();
+        
         
 
         // Add self to parent's update list
@@ -158,6 +166,25 @@ class TerrainPlane extends Group {
         // this.obstacles.push(boot3);      
     }
 
+    spawnFish() {
+ 
+        let p1 = new Fish(this);
+        this.add(p1);
+        this.fishies.push(p1);
+        
+        
+
+    }
+    spawnJelly() {
+
+        let p1 = new JellyFish(this);
+        this.add(p1);
+        this.jellies.push(p1);
+        
+        
+
+    }
+
     spawnSeaweed() {
         var i = Math.round(Math.random()*(this.heightMap[0].length - 2));
         var j = Math.round(Math.random()*(this.heightMap.length -2));
@@ -172,12 +199,7 @@ class TerrainPlane extends Group {
         var vert1 = this.geometry.vertices[face.a];
         var vert2 = this.geometry.vertices[face.b];
         var vert3 = this.geometry.vertices[face.c];
-
-     
-
-        //just don't set it if z is 0...
-        // find a pattern to the fuck ups and fix them
-
+        //console.log(vert1.z, vert2.z, vert3.z);
         
         var onebig = false;
         var twobig = false;
@@ -201,10 +223,6 @@ class TerrainPlane extends Group {
         }
     
         var y;
-        // if (closest > 30 && closest < 40)
-        // {
-        //     y = closest + 30;
-        // }
         y = closest;
         if (onebig)
         {
@@ -223,7 +241,7 @@ class TerrainPlane extends Group {
         }
         //console.log(x, y, z);
     
-        if (y == 0)
+        if (vert1.z > 50 && vert2.z > 50 && vert3.z > 50)
         {
         let sea1 = new Seaweed(this, x, y, z);
         this.add(sea1);

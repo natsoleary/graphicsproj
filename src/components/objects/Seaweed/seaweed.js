@@ -72,8 +72,8 @@ class Seaweed extends Group {
                 const delta = 0.01;
                 // update animation
                 this.state.mixer.update(delta);
+                
             }
-
 
         this.boundingBox.setFromObject(this);
         if (xneg) {
