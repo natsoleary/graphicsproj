@@ -41,12 +41,12 @@ update(timeStamp) {
    // move Shark
    if (this.shark != undefined) {
     let oldSharkLocation = new Vector2(this.shark.position.x, this.shark.position.z);
-    let newSharkLocation = new Vector2(10*Math.cos(timeStamp/2000), 10*Math.sin(timeStamp/2000));
+    let newSharkLocation = new Vector2(100*Math.cos(timeStamp/2000), 100*Math.sin(timeStamp/2000));
     let sharkDifference = oldSharkLocation.clone().sub(newSharkLocation);
     let sharkAng = sharkDifference.angle();
     this.shark.rotation.y =  -1* (sharkAng -  .6 * Math.PI / 4);
-    this.shark.position.x = 10*Math.cos(timeStamp/2000);
-    this.shark.position.z = 10*Math.sin(timeStamp/2000);
+    this.shark.position.x = 100*Math.cos(timeStamp/2000);
+    this.shark.position.z = 100*Math.sin(timeStamp/2000);
     this.BB.rotation.y = -1 * (sharkAng -  6 * Math.PI / 4);
     this.BB.position.x = 100*Math.cos(timeStamp/2000);
     this.BB.position.z = 100*Math.sin(timeStamp/2000);   }

@@ -8,9 +8,7 @@ import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
 import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
-import KELPMODEL from './PUSHILIN_kelp.obj';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
-import IMAGE from './PUSHILIN_kelp.png';
 
 
 
@@ -114,24 +112,12 @@ class TerrainPlane extends Group {
         this.add(terrain);
         this.add(lowerTerrain);
         
-        const loader = new OBJLoader();
-        loader.load(KELPMODEL, (object) => { // load object and add to scene
-            let texture = new TextureLoader().load(IMAGE);
-            object.traverse((child) => {
-              if (child.type == "Mesh") child.material.map = texture;
-            });
-            this.kelp = object;
-          //   this.object.position.set(position.x, position.y, position.z);
-            object.scale.multiplyScalar(20);
-            // this.add(this.object);
-          });
 
 
     // console.log("from state", this.state.babyModel);
 
-        // this.spawnBabies();
-        // this.spawnObstacles();     
-        this.spawnedKelp = false; 
+        this.spawnBabies();
+        this.spawnObstacles();     
         this.spawnKelp();  
         
 
@@ -158,14 +144,14 @@ class TerrainPlane extends Group {
        
     }
     spawnObstacles() {
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
             let boot = new Boot(this);
             this.add(boot);
             this.state.parent.state.parent.obstacleList.push(boot);
             this.obstacles.push(boot);
 
         }
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
             let shark = new Shark(this);
             this.add(shark);
             this.state.parent.state.parent.obstacleList.push(shark);
@@ -182,9 +168,7 @@ class TerrainPlane extends Group {
         //     this.rotateonce = true;
         //     }
         // }
-        if (this.kelp != undefined) {
-            this.spawnedKelp = true;
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 5; i++) {
                 let random = Math.round(Math.random()*6960);
                 const f = this.geometry.faces[random]
                 const v = this.geometry.vertices[f.a].clone();
@@ -203,7 +187,6 @@ class TerrainPlane extends Group {
                     let kelp = new Kelp(this, this.kelp);
                     kelp.position.set(v.y,v.z + 25,v.x);
                     this.add(kelp);
-            }
 
             // }
             // this.pl.push(shark);
@@ -410,9 +393,6 @@ class TerrainPlane extends Group {
 
       }
       updateSharks(timeStamp) {
-          if (!this.spawnedKelp) {
-              this.spawnKelp();
-          }
           for (let shark of this.sharks) {
               shark.update(timeStamp);
           }
