@@ -90,6 +90,7 @@ class TerrainManager extends Group {
       // console.log("Update in chunk manager. x: " + x + " y: " + y + " z: " + z)
       // make/delete chunks as needed
       // Initialized as a 0 but are actually supposed to be PlaneGeometry objects
+
       let plane_geos = [0, 0, 0];
       let xneg = false;
       let zneg = true;
@@ -258,6 +259,9 @@ class TerrainManager extends Group {
       this.position.x = -x;
       this.position.y = y - startYBelow;
       this.position.z = -z;
+      for (let chunk of this.state.terrain_chunks) {
+        chunk.updateSharks(timeStamp);
+      }
 
 
     }

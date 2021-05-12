@@ -31,6 +31,7 @@ class Boot extends Group {
       });
       this.object = object;
       this.object.position.set(x, y, z);
+      object.scale.multiplyScalar(3);
       this.add(this.object);
     });
   }
@@ -48,7 +49,7 @@ class Boot extends Group {
     this.remove(this.BB);
     this.parent.remove(this);
 
-    this.remove(this.baby);
+    this.remove(this.object);
   }
 }
 

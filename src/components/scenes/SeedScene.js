@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry  } from 'three';
-import { Flower, Land, Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
+import {Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
 // import { Turtle } from '../objects';
 
