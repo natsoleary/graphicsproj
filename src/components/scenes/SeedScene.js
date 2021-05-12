@@ -70,6 +70,8 @@ class SeedScene extends Scene {
             if (obj.name == "TerrainManager") {
                 obj.update(timeStamp, this.state.x, this.state.y, this.state.z);
             }
+
+            
         }
         this.detectCollisions();
         this.detectObstacles();

@@ -6,12 +6,17 @@ import SAND from './sandgrain.jpeg';
 import {Baby} from '../Baby';
 import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
+<<<<<<< HEAD
 import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
 import KELPMODEL from './PUSHILIN_kelp.obj';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
 import IMAGE from './PUSHILIN_kelp.png';
 
+=======
+import {Fish} from '../Fishies';
+import {JellyFish} from '../JellyFish';
+>>>>>>> a0a9e9d05cf4fbcc303fa885ebe20a4f6324947a
 
 
 const terrainSize = {width: 1000, height: 1000, vertsWidth: 100, vertsHeight: 100};
@@ -66,7 +71,12 @@ class TerrainPlane extends Group {
         this.babies = [];
         this.seaweeds = [];
         this.obstacles = [];
+<<<<<<< HEAD
         this.sharks = [];
+=======
+        this.fishies = [];
+        this.jellies = [];
+>>>>>>> a0a9e9d05cf4fbcc303fa885ebe20a4f6324947a
 
   
         // get perline noise height map and update the geometry
@@ -133,6 +143,12 @@ class TerrainPlane extends Group {
         // this.spawnObstacles();     
         this.spawnedKelp = false; 
         this.spawnKelp();  
+        this.spawnBabies();
+        this.spawnObstacles();        
+        // this.spawnSeaweed();
+        // this.spawnJelly();
+        // this.spawnFish();
+        
         
 
         // Add self to parent's update list
@@ -213,6 +229,24 @@ class TerrainPlane extends Group {
 
     }
 
+    spawnFish() {
+ 
+        let p1 = new Fish(this);
+        this.add(p1);
+        this.fishies.push(p1);
+        
+        
+
+    }
+    spawnJelly() {
+
+        let p1 = new JellyFish(this);
+        this.add(p1);
+        this.jellies.push(p1);
+        
+        
+
+    }
 
     // spawnSeaweed() {
     //     var i = Math.round(Math.random()*(this.heightMap[0].length - 2));
@@ -228,12 +262,7 @@ class TerrainPlane extends Group {
     //     var vert1 = this.geometry.vertices[face.a];
     //     var vert2 = this.geometry.vertices[face.b];
     //     var vert3 = this.geometry.vertices[face.c];
-
-     
-
-    //     //just don't set it if z is 0...
-    //     // find a pattern to the fuck ups and fix them
-
+    //     //console.log(vert1.z, vert2.z, vert3.z);
         
     //     var onebig = false;
     //     var twobig = false;
