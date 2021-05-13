@@ -1,4 +1,4 @@
-import { Group, Box3, Vector3, Vector2, BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
+import { Group, Box3, Vector3, Vector2, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
 import MODEL from './shark.obj';
 import MATERIAL from './shark.mtl';
 import IMAGE from './Tex_Shark.png';
@@ -22,19 +22,23 @@ class Shark extends Group {
     boundbox.visible = false;
     this.BB = boundbox;
     this.add(this.BB);
-    const loader = new OBJLoader();
+    // const loader = new OBJLoader();
     this.name = 'shark';
-    loader.load(MODEL, (object) => { // load object and add to scene
-      let texture = new TextureLoader().load(IMAGE);
-      object.traverse((child) => {
-        if (child.type == "Mesh") child.material.map = texture;
-      });
-      this.shark = object;
-      this.shark.position.set(x,y,z);
-      object.scale.multiplyScalar(3);
-    //   object.position.y = -23.7;
-      this.add(object);
-    });
+    this.shark = new Object3D();
+    this.shark.copy(parent.objects.shark);
+    this.shark.position.set(x,y,z);
+    this.add(this.shark);
+    // loader.load(MODEL, (object) => { // load object and add to scene
+    //   let texture = new TextureLoader().load(IMAGE);
+    //   object.traverse((child) => {
+    //     if (child.type == "Mesh") child.material.map = texture;
+    //   });
+    //   this.shark = object;
+    //   this.shark.position.set(x,y,z);
+    //   object.scale.multiplyScalar(3);
+    // //   object.position.y = -23.7;
+    //   this.add(object);
+    // });
   }
 
 update(timeStamp) {

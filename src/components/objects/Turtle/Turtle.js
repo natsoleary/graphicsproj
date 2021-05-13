@@ -33,7 +33,7 @@ class Turtle extends Group {
             animation: null,
             action: null,
             newAnimate: false,
-            velocity: 2,
+            velocity: 5,
             keysPressed: [],
             repeated: true,
         };

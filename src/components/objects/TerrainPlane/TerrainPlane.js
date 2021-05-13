@@ -25,6 +25,7 @@ class TerrainPlane extends Group {
         super();
 
         // Init state
+        this.objects = parent.objects;
         this.state = {
             parent: parent,
             chunkWidth: parent.state.chunkWidth,

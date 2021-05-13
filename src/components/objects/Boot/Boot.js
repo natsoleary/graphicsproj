@@ -1,6 +1,5 @@
-import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
+import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
 import MODEL from './CHAHIN_BOOTS.obj';
-import MATERIAL from './CHAHIN_BOOTS.mtl';
 import IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
@@ -10,7 +9,7 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
 class Boot extends Group {
   constructor(parent) {
     super();
-    const loader = new OBJLoader();
+    // const loader = new OBJLoader();
     this.name = 'boot';
     this.parent = parent;
     let x = Math.random() * 1500;
@@ -24,16 +23,20 @@ class Boot extends Group {
     boundbox.visible = false;
     this.BB = boundbox;
     this.add(this.BB);
-    loader.load(MODEL, (object) => { // load object and add to scene
-      let texture = new TextureLoader().load(IMAGE);
-      object.traverse((child) => {
-        if (child.type == "Mesh") child.material.map = texture;
-      });
-      this.object = object;
-      this.object.position.set(x, y, z);
-      object.scale.multiplyScalar(3);
-      this.add(this.object);
-    });
+    this.object = new Object3D();
+    this.object.copy(parent.objects.boot);
+    this.object.position.set(x,y,z);
+    this.add(this.object);
+    // loader.load(MODEL, (object) => { // load object and add to scene
+    //   let texture = new TextureLoader().load(IMAGE);
+    //   object.traverse((child) => {
+    //     if (child.type == "Mesh") child.material.map = texture;
+    //   });
+    //   this.object = object;
+    //   this.object.position.set(x, y, z);
+    //   object.scale.multiplyScalar(3);
+    //   this.add(this.object);
+    // });
   }
   disposeOf() {
     this.boxmaterial.dispose();

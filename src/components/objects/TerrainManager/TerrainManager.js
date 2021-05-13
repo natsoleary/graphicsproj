@@ -17,12 +17,17 @@ const chunkVertexWidth = 60;
 
 
 class TerrainManager extends Group {
-    constructor(parent) {
+    constructor(parent, shark, boot, kelp) {
         // Call parent Group() constructor
         super();
 
         this.name = "TerrainManager"
+        this.objects = {
+          shark: shark,
+          boot: boot,
+          kelp: kelp,
 
+        };
         // Init state
         this.state = {
             parent: parent,

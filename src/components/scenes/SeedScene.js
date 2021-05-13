@@ -1,7 +1,16 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry  } from 'three';
+import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry, LoadingManager} from 'three';
 import {Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
+import SHARK_MODEL from './shark.obj';
+import SHARK_IMAGE from './Tex_Shark.png';
+import BOOT_MODEL from './CHAHIN_BOOTS.obj';
+import BOOT_IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
+import KELP_MODEL from './PUSHILIN_kelp.obj';
+import KELP_IMAGE from './PUSHILIN_kelp.png';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
+
 // import { Turtle } from '../objects';
 
 class SeedScene extends Scene {
@@ -48,11 +57,73 @@ class SeedScene extends Scene {
         // turtle.boundingBox = turtle.boundingBox.setFromObject(turtle);
         this.turtleboundingbox = turtle.boundingBox;
 
-        var terrainMan = new TerrainManager(this);
         this.onlydoonce = false;
 
-        this.add(turtle, lights, terrainMan);
+        this.add(turtle, lights);
+        this.sharkLoaded = false;
+        this.bootLoaded = false;
+        this.kelpLoaded = false;
 
+        this.loadSharks();
+        this.loadBoots();
+        this.loadKelp();
+
+        this.kelp = null;
+        this.shark = null;
+        this.boot = null;
+        this.ONCE = true;
+
+
+    }
+
+    loadSharks() {
+        const sharkmanager = new LoadingManager();
+        sharkmanager.onLoad = () => {
+            this.sharkLoaded = true;
+        }
+        const sharkloader = new OBJLoader(sharkmanager);
+
+        sharkloader.load(SHARK_MODEL, (object) => { // load object and add to scene
+            let texture = new TextureLoader().load(SHARK_IMAGE);
+            object.traverse((child) => {
+              if (child.type == "Mesh") child.material.map = texture;
+            });
+            this.shark = object;
+            object.scale.multiplyScalar(3);
+          });
+    }
+    loadBoots() {
+        const bootmanager = new LoadingManager();
+        bootmanager.onLoad = () => {
+        this.bootLoaded = true;
+        }
+        const bootloader = new OBJLoader(bootmanager);
+
+        bootloader.load(BOOT_MODEL, (object) => { // load object and add to scene
+            let texture = new TextureLoader().load(BOOT_IMAGE);
+            object.traverse((child) => {
+              if (child.type == "Mesh") child.material.map = texture;
+            });
+            this.boot = object;
+            this.boot.name = "boot";
+            object.scale.multiplyScalar(3);
+          });
+    }
+    loadKelp() {
+        const kelpmanager = new LoadingManager();
+        kelpmanager.onLoad = () => {
+        this.kelpLoaded = true;
+        }
+        const kelploader = new OBJLoader(kelpmanager);
+
+        kelploader.load(KELP_MODEL, (object) => { // load object and add to scene
+            let texture = new TextureLoader().load(KELP_IMAGE);
+            object.traverse((child) => {
+              if (child.type == "Mesh") child.material.map = texture;
+            });
+            this.kelp = object;
+            object.scale.multiplyScalar(10);
+          });
     }
 
     addToUpdateList(object) {
@@ -60,6 +131,12 @@ class SeedScene extends Scene {
     }
 
     update(timeStamp) {
+        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.ONCE) {
+            this.ONCE = false;
+            console.log("here");
+            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp);
+            this.add(terrainMan)
+        }
         const { updateList, x, y, z } = this.state;
 
         // Call update for each object in the updateList
