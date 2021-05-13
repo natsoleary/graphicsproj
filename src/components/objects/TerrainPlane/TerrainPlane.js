@@ -9,6 +9,7 @@ import {Seaweed} from '../Seaweed';
 import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
 import {Trash} from '../Trash';
+import {Can} from '../Can';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
 
 
@@ -140,7 +141,7 @@ class TerrainPlane extends Group {
        
     }
     spawnObstacles() {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 5; i++) {
             let boot = new Boot(this);
             this.add(boot);
             this.state.parent.state.parent.obstacleList.push(boot);
@@ -161,6 +162,13 @@ class TerrainPlane extends Group {
             this.add(trash);
             this.state.parent.state.parent.obstacleList.push(trash);
             this.obstacles.push(trash);       
+         }
+
+        for (let i  = 0; i < 5; i++) {
+            let can = new Can(this);
+            this.add(can);
+            this.state.parent.state.parent.obstacleList.push(can);
+            this.obstacles.push(can);       
          }
 
     }

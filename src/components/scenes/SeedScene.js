@@ -13,6 +13,10 @@ import BABY_MODEL from './NOVELO_TURTLE.obj';
 import BABY_MAT from './NOVELO_TURTLE.mtl';
 import TRASH_MODEL from './trash_model.obj';
 import TRASH_MAT from './trash_materials.mtl';
+import CAN_MODEL from './SodaCan_01.obj';
+import CAN_MAT from './SodaCan_01.mtl';
+
+
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
 
@@ -70,18 +74,21 @@ class SeedScene extends Scene {
         this.kelpLoaded = false;
         this.babyLoaded = false;
         this.trashLoaded = false;
+        this.canLoaded = false;
 
         this.loadSharks();
         this.loadBoots();
         this.loadKelp();
         this.loadBaby();
         this.loadTrash();
+        this.loadCan();
 
         this.kelp = null;
         this.shark = null;
         this.boot = null;
         this.baby = null;
         this.trash = null;
+        this.can = null;
 
         this.ONCE = true;
 
@@ -101,7 +108,7 @@ class SeedScene extends Scene {
               if (child.type == "Mesh") child.material.map = texture;
             });
             this.shark = object;
-            object.scale.multiplyScalar(5);
+            object.scale.multiplyScalar(8);
           });
     }
     loadBoots() {
@@ -170,9 +177,29 @@ class SeedScene extends Scene {
           trashloader.setMaterials( materials );
           trashloader.load(TRASH_MODEL, (object) => { // load object and add to scen
 
-            object.scale.multiplyScalar(30);
+            object.scale.multiplyScalar(50);
             object.rotateZ(Math.PI/4);
             this.trash = object;
+          });
+        });
+    }
+    loadCan () {
+        const canmanager = new LoadingManager();
+        canmanager.onLoad = () => {
+            this.canLoaded = true;
+            }
+        const canloader = new OBJLoader(canmanager);
+
+        var mtlLoader = new MTLLoader();
+      
+        mtlLoader.load(CAN_MAT, ( materials ) => {
+          materials.preload();
+          canloader.setMaterials( materials );
+          canloader.load(CAN_MODEL, (object) => { // load object and add to scen
+
+            object.scale.multiplyScalar(.04);
+            // object.rotateZ(Math.PI/4);
+            this.can = object;
           });
         });
     }
@@ -182,10 +209,10 @@ class SeedScene extends Scene {
     }
 
     update(timeStamp) {
-        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.ONCE) {
+        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.canLoaded && this.ONCE) {
             this.ONCE = false;
             console.log("here");
-            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash);
+            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash, this.can);
             this.add(terrainMan)
         }
         const { updateList, x, y, z } = this.state;
