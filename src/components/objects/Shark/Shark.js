@@ -11,9 +11,9 @@ class Shark extends Group {
   constructor(parent) {
     super();
     this.parent = parent;
-    let x = Math.random() * 1500;
-    let y = 70 + Math.random() * 50;
-    let z = Math.random() * 1500;
+    let x = Math.random() * 2000;
+    let y = 50 + Math.random() * 100;
+    let z = Math.random() * 2000;
     this.position.set(x,y,z)
     this.box = new BoxGeometry(10, 10, 20);
     this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
