@@ -290,6 +290,19 @@ class SeedScene extends Scene {
     getLives() {
         return this.lives;
     }
+
+   
+    pauseTurtle() {
+        this.turtle_object.state.velocity = 0;
+    }
+    unpauseTurtle(easy, medium, hard) {
+        if (easy) this.turtle_object.state.velocity = 3;
+        else if (medium) this.turtle_object.state.velocity = 5;
+        else if (hard) this.turtle_object.state.velocity = 7;
+        else {
+            this.turtle_object.state.velocity = 5;
+        }
+    }
     }
 
 export default SeedScene;
