@@ -70,11 +70,15 @@
  
  document.body.appendChild(coralDiv);
  
+
+ var easy = false;
+ var medium = false;
+ var hard = false;
  
  
  
  // start screen 
- 
+ scene.pauseTurtle();
  
          // Set up intro screen
          let beginContainer = document.createElement('div');
@@ -113,6 +117,7 @@
          // Begin game
          beginContentButton.onclick = function () {
              beginContainer.style.display = 'none';
+             scene.unpauseTurtle(easy, medium, hard);
  
          };
  
@@ -142,11 +147,7 @@
              // add graphics to show what these things are 
              // add the arrow keys and babies and shark
              
-             //+
-             // 'DOWN: move down<br>' +
-             // 'LEFT: move left<br>' +
-             // 'RIGHT: move right<br>' +
-             // 'UP: move up<br>';
+          
          instructionsContentText.appendChild(instructionsContentDescription);
  
          let backButton = document.createElement('div');
@@ -249,6 +250,10 @@
              easyButtonDifficulty.onclick = function () {
                  beginContainer.style.display = 'flex';
                  difficultyContainer.style.display = 'none';
+                
+                 easy = true;
+                 medium = false;
+                 hard = false;
              };
  
              let mediumButtonDifficulty = document.createElement('div');
@@ -259,6 +264,10 @@
              mediumButtonDifficulty.onclick = function () {
                  beginContainer.style.display = 'flex';
                  difficultyContainer.style.display = 'none';
+              
+                 medium = true;
+                 hard = false;
+                 easy = false;
              };
  
              let hardButtonDifficulty = document.createElement('div');
@@ -269,10 +278,62 @@
              hardButtonDifficulty.onclick = function () {
                  beginContainer.style.display = 'flex';
                  difficultyContainer.style.display = 'none';
+                 
+                 hard = true;
+                 medium = false;
+                 easy = false;
              };
              document.body.appendChild(difficultyContainer);
- 
- 
+
+
+             // end container
+             // Set up outro screen
+let endContainer = document.createElement('div');
+endContainer.id = 'end-container';
+document.body.appendChild(endContainer);
+
+let endContent = document.createElement('div');
+endContent.id = 'end-content';
+endContainer.appendChild(endContent);
+
+let endContentText = document.createElement('div');
+endContentText.id = 'end-text';
+endContent.appendChild(endContentText);
+
+let endContentTitleText = document.createElement('h1');
+endContentTitleText.innerText = 'GAME OVER :(';
+endContentText.appendChild(endContentTitleText);
+
+let endContentDescription = document.createElement('p');
+endContentDescription.innerHTML = 'Your babies:';
+endContentText.appendChild(endContentDescription);
+
+let endContentScore = document.createElement('h1');
+endContentScore.id = 'end-score';
+endContentText.appendChild(endContentScore);
+
+let endContentButton = document.createElement('div');
+endContentButton.id = 'end-button';
+endContentButton.innerHTML = 'Play Again!';
+endContent.appendChild(endContentButton);
+
+// End game and reset by refreshing
+endContentButton.onclick = function () {
+    endContainer.style.display = 'none';
+    babiesCollected = 0;
+    corals = 3;
+    scene.pauseTurtle();
+    for (let i = 0; i < corals; i++) {
+        let coralImg = document.createElement('img');
+        coralImg.src = coralIcon;
+        coralDiv.appendChild(coralImg);
+    }
+    window.location.reload();
+};
+
+endContainer.style.display = 'none';
+
+  
  
  // Render loop
  const onAnimationFrameHandler = (timeStamp) => {
@@ -289,6 +350,13 @@
      }
      pastcorals = corals;
 
+         // game over if lives are 0
+    if (corals <= 0) {
+     
+        endContainer.style.display = 'flex';
+        endContentScore.innerText = babiesCollected;
+    }
+    document.getElementById('babies').innerHTML = 'Babies: ' + babiesCollected;
  
      
  };
