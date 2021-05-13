@@ -8,6 +8,7 @@ import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
 import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
+import {Trash} from '../Trash';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
 
 
@@ -127,21 +128,15 @@ class TerrainPlane extends Group {
 
     }
     spawnBabies() {
-        let baby = new Baby(this);
-        let baby2 = new Baby(this);
-        let baby3 = new Baby(this);
+
+        for (let i = 0; i < 5; i++) {
+            let baby = new Baby(this);
+            this.add(baby);
+            this.add(baby);
+            this.state.parent.state.parent.collidableMeshList.push(baby);
+            this.babies.push(baby);
+        }
         
-        this.add(baby);
-        this.add(baby2);
-        this.add(baby3);
-        this.state.parent.state.parent.collidableMeshList.push(baby);
-        this.state.parent.state.parent.collidableMeshList.push(baby2);
-        this.state.parent.state.parent.collidableMeshList.push(baby3);
-
-
-        this.babies.push(baby);
-        this.babies.push(baby2);
-        this.babies.push(baby3);  
        
     }
     spawnObstacles() {
@@ -161,116 +156,28 @@ class TerrainPlane extends Group {
 
         }
 
+        for (let i  = 0; i < 5; i++) {
+            let trash = new Trash(this);
+            this.add(trash);
+            this.state.parent.state.parent.obstacleList.push(trash);
+            this.obstacles.push(trash);       
+         }
+
     }
     spawnKelp() {
-        // if (!this.rotateonce) {
-        //     if (this.geometry != undefined) {
-        //     this.geometry.rotateX(toRad(90));
-        //     this.rotateonce = true;
-        //     }
-        // }
             for (let i = 0; i < 5; i++) {
                 let random = Math.round(Math.random()*6960);
                 const f = this.geometry.faces[random]
                 const v = this.geometry.vertices[f.a].clone();
-                // let rotation  = new Euler(toRad(-90), 0,0, 'XYZ');
-                // v.applyEuler(rotation);
-                // let position = new Vector3(v.x,v.z,-v.y);
-
-
-
-
-
-                // var position = new Vector3(vertx, verty, vertz); 
-                // var position = Math.max(Math.max(face.c.z, Math.max(face.a.z, face.b.z)));
-                // if (position != undefined) {
-                    // console.log("appens");
                     let kelp = new Kelp(this, this.kelp);
                     kelp.position.set(v.y,v.z + 25,v.x);
                     this.add(kelp);
-
-            // }
-            // this.pl.push(shark);
 
         }
 
 
     }
 
-
-    // spawnSeaweed() {
-    //     var i = Math.round(Math.random()*(this.heightMap[0].length - 2));
-    //     var j = Math.round(Math.random()*(this.heightMap.length -2));
-    //     var index = j*(this.heightMap.length - 2) + i;
-    //     //console.log(index);
-    //     //const v1 = this.geometry.vertices[index];
-    //     //console.log(v1.z);
-    //     var random = Math.round(Math.random()*(this.geometry.faces.length - 1));
-    //     //console.log(random);
-    //     var face = this.geometry.faces[random];
-    //     //console.log(face);
-    //     var vert1 = this.geometry.vertices[face.a];
-    //     var vert2 = this.geometry.vertices[face.b];
-    //     var vert3 = this.geometry.vertices[face.c];
-
-     
-
-    //     //just don't set it if z is 0...
-    //     // find a pattern to the fuck ups and fix them
-
-        
-    //     var onebig = false;
-    //     var twobig = false;
-    //     var threebig = false;
-    //     var closest;
-
-     
-    //     if (vert1.z > vert2.z) {
-    //       closest = vert1.z;
-    //       onebig = true;
-    //     }
-    //     else {
-    //       closest = vert2.z;
-    //       twobig = true;
-    //     }
-    //     if (vert3.z > closest) {
-    //       closest = vert3.z;
-    //       threebig = true;
-    //       twobig = false;
-    //       onebig = false;
-    //     }
-    
-    //     var y;
-    //     // if (closest > 30 && closest < 40)
-    //     // {
-    //     //     y = closest + 30;
-    //     // }
-    //     y = closest;
-    //     if (onebig)
-    //     {
-    //     var x = vert1.x;
-    //     var z = vert1.y;
-    //     }
-    //     if (twobig)
-    //     {
-    //     var x = vert2.x;
-    //     var z = vert2.y;
-    //     }
-    //     if (threebig)
-    //     {
-    //     var x = vert3.x;
-    //     var z = vert3.y;
-    //     }
-    //     //console.log(x, y, z);
-    
-    //     if (y == 0)
-    //     {
-    //     let sea1 = new Seaweed(this, x, y, z);
-    //     this.add(sea1);
-    //     this.seaweeds.push(sea1);
-    //     }
-        
-    // }
 
     updateTerrainGeo() {///
         //assign vert data from the canvas

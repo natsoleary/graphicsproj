@@ -1,5 +1,5 @@
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
+import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import MODEL from './NOVELO_TURTLE.obj';
@@ -17,9 +17,9 @@ class Baby extends Group {
         super();
         this.name = "Baby";
         this.parent = parent;
-        let x = Math.random() * 1500;
+        let x = Math.random() * 2000;
         let y = 70 + Math.random() * 50;
-        let z = Math.random() * 1500;
+        let z = Math.random() * 2000;
         this.position.set(x,y,z)
         this.box = new BoxGeometry(10, 10, 10);
         this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
@@ -28,21 +28,24 @@ class Baby extends Group {
         boundbox.visible = false;
         this.BB = boundbox;
         this.add(this.BB);
-        const loader = new OBJLoader();
+        this.baby = new Object3D();
+        this.baby.copy(parent.objects.baby);
+        this.baby.position.set(x,y,z);
+        this.add(this.baby);        // const loader = new OBJLoader();
 
-        var mtlLoader = new MTLLoader();
+        // var mtlLoader = new MTLLoader();
       
-        mtlLoader.load(MAT, ( materials ) => {
-          materials.preload();
-          loader.setMaterials( materials );
-          loader.load(MODEL, (object) => { // load object and add to scen
+        // mtlLoader.load(MAT, ( materials ) => {
+        //   materials.preload();
+        //   loader.setMaterials( materials );
+        //   loader.load(MODEL, (object) => { // load object and add to scen
 
-            object.scale.multiplyScalar(0.01);
-            this.baby = object;
-            this.baby.position.set(x, y, z);
-            this.add(this.baby);
-          });
-        });
+        //     object.scale.multiplyScalar(0.01);
+        //     this.baby = object;
+        //     this.baby.position.set(x, y, z);
+        //     this.add(this.baby);
+        //   });
+        // });
 
 
     }

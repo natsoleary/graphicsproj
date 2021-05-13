@@ -17,7 +17,7 @@ const chunkVertexWidth = 60;
 
 
 class TerrainManager extends Group {
-    constructor(parent, shark, boot, kelp) {
+    constructor(parent, shark, boot, kelp, baby, trash) {
         // Call parent Group() constructor
         super();
 
@@ -26,6 +26,8 @@ class TerrainManager extends Group {
           shark: shark,
           boot: boot,
           kelp: kelp,
+          baby: baby,
+          trash: trash,
 
         };
         // Init state
@@ -62,7 +64,7 @@ class TerrainManager extends Group {
           let new_plane_geo = new PlaneGeometry(this.state.chunkWidth, this.state.chunkWidth,
                                       this.state.chunkVertWidth - 1, this.state.chunkVertWidth - 1);
           const new_chunk = new TerrainPlane(this, coordinates[i][0], coordinates[i][1], coordinates[i][2], new_plane_geo);
-          this.add(new_chunk);
+          // this.add(new_chunk);
           this.state.terrain_chunks.push(new_chunk);
         }
 
@@ -97,8 +99,6 @@ class TerrainManager extends Group {
       // Initialized as a 0 but are actually supposed to be PlaneGeometry objects
 
       let plane_geos = [0, 0, 0];
-      let xneg = false;
-      let zneg = true;
       let need_update = (z > this.state.chunkWidth/2) || (z < -this.state.chunkWidth/2)
       || (x > this.state.chunkWidth/2) || (x < -this.state.chunkWidth/2);
 

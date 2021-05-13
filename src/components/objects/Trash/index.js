@@ -1,1 +1,1 @@
-export { default as Baby } from './Baby.js';
+export { default as Trash } from './Trash.js';

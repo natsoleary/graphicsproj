@@ -2,12 +2,17 @@ import * as Dat from 'dat.gui';
 import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry, LoadingManager} from 'three';
 import {Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import SHARK_MODEL from './shark.obj';
 import SHARK_IMAGE from './Tex_Shark.png';
 import BOOT_MODEL from './CHAHIN_BOOTS.obj';
 import BOOT_IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
 import KELP_MODEL from './PUSHILIN_kelp.obj';
 import KELP_IMAGE from './PUSHILIN_kelp.png';
+import BABY_MODEL from './NOVELO_TURTLE.obj';
+import BABY_MAT from './NOVELO_TURTLE.mtl';
+import TRASH_MODEL from './trash_model.obj';
+import TRASH_MAT from './trash_materials.mtl';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
 
@@ -63,14 +68,21 @@ class SeedScene extends Scene {
         this.sharkLoaded = false;
         this.bootLoaded = false;
         this.kelpLoaded = false;
+        this.babyLoaded = false;
+        this.trashLoaded = false;
 
         this.loadSharks();
         this.loadBoots();
         this.loadKelp();
+        this.loadBaby();
+        this.loadTrash();
 
         this.kelp = null;
         this.shark = null;
         this.boot = null;
+        this.baby = null;
+        this.trash = null;
+
         this.ONCE = true;
 
 
@@ -89,7 +101,7 @@ class SeedScene extends Scene {
               if (child.type == "Mesh") child.material.map = texture;
             });
             this.shark = object;
-            object.scale.multiplyScalar(3);
+            object.scale.multiplyScalar(5);
           });
     }
     loadBoots() {
@@ -125,16 +137,55 @@ class SeedScene extends Scene {
             object.scale.multiplyScalar(10);
           });
     }
+    loadBaby () {
+        const babymanager = new LoadingManager();
+        babymanager.onLoad = () => {
+            this.babyLoaded = true;
+            }
+        const babyloader = new OBJLoader(babymanager);
+
+        var mtlLoader = new MTLLoader();
+      
+        mtlLoader.load(BABY_MAT, ( materials ) => {
+          materials.preload();
+          babyloader.setMaterials( materials );
+          babyloader.load(BABY_MODEL, (object) => { // load object and add to scen
+
+            object.scale.multiplyScalar(0.01);
+            this.baby = object;
+          });
+        });
+    }
+    loadTrash () {
+        const trashmanager = new LoadingManager();
+        trashmanager.onLoad = () => {
+            this.trashLoaded = true;
+            }
+        const trashloader = new OBJLoader(trashmanager);
+
+        var mtlLoader = new MTLLoader();
+      
+        mtlLoader.load(TRASH_MAT, ( materials ) => {
+          materials.preload();
+          trashloader.setMaterials( materials );
+          trashloader.load(TRASH_MODEL, (object) => { // load object and add to scen
+
+            object.scale.multiplyScalar(30);
+            object.rotateZ(Math.PI/4);
+            this.trash = object;
+          });
+        });
+    }
 
     addToUpdateList(object) {
         this.state.updateList.push(object);
     }
 
     update(timeStamp) {
-        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.ONCE) {
+        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.ONCE) {
             this.ONCE = false;
             console.log("here");
-            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp);
+            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash);
             this.add(terrainMan)
         }
         const { updateList, x, y, z } = this.state;

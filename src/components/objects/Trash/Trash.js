@@ -1,16 +1,13 @@
 import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
-import MODEL from './CHAHIN_BOOTS.obj';
-import IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
+
 
 // from https://poly.google.com/view/7HbqG8RwRcA
 // Credit: Poly by Google
-class Boot extends Group {
+class Trash extends Group {
   constructor(parent) {
     super();
     // const loader = new OBJLoader();
-    this.name = 'boot';
+    this.name = 'trash';
     this.parent = parent;
     let x = Math.random() * 2000;
     let y = 70 + Math.random() * 50;
@@ -24,7 +21,7 @@ class Boot extends Group {
     this.BB = boundbox;
     this.add(this.BB);
     this.object = new Object3D();
-    this.object.copy(parent.objects.boot);
+    this.object.copy(parent.objects.trash);
     this.object.position.set(x,y,z);
     this.add(this.object);
   }
@@ -46,4 +43,4 @@ class Boot extends Group {
   }
 }
 
-  export default Boot;
+  export default Trash;
