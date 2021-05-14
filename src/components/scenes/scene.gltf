@@ -190,15 +190,15 @@
   "buffers": [
     {
       "byteLength": 277704,
-      "uri": "src/components/objects/Fish/cartoon_anglerfish/scene.bin"
+      "uri": "src/components/scenes/scene.bin"
     }
   ],
   "images": [
     {
-      "uri": "src/components/objects/Fish/cartoon_anglerfish/textures/LP_Mat_baseColor.png"
+      "uri": "src/components/scenes/textures/LP_Mat_baseColor.png"
     },
     {
-      "uri": "src/components/objects/Fish/cartoon_anglerfish/textures/LP_Mat_emissive.png"
+      "uri": "src/components/scenes/textures/LP_Mat_emissive.png"
     }
   ],
   "materials": [

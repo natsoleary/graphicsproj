@@ -113,7 +113,7 @@ class SeedScene extends Scene {
         this.loadBottle();
         this.loadAnemone();
         this.loadPipe();
-        // this.loadFish();
+        this.loadFish();
 
         this.ONCE = true;
 
@@ -292,8 +292,6 @@ class SeedScene extends Scene {
             this.fishLoaded = true;
         }
         const fishloader = new GLTFLoader(fishmanager);
-
-        // load the seaweed
         fishloader.load(FISH_MODEL, (gltf) => {
         const model = gltf.scene.children[0];
         model.scale.set(0.1, 0.1, 0.1);
