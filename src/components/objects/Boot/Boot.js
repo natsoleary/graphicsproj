@@ -1,8 +1,5 @@
 import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
-import MODEL from './CHAHIN_BOOTS.obj';
-import IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
+
 
 // from https://poly.google.com/view/7HbqG8RwRcA
 // Credit: Poly by Google
@@ -12,9 +9,9 @@ class Boot extends Group {
     // const loader = new OBJLoader();
     this.name = 'boot';
     this.parent = parent;
-    let x = Math.random() * 2000;
+    let x = Math.random() * 1500;
     let y = 70 + Math.random() * 50;
-    let z = Math.random() * 2000;
+    let z = Math.random() * 1500;
     this.position.set(x,y,z)
     this.box = new BoxGeometry(10, 10, 10);
     this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );

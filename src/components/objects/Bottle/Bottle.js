@@ -1,27 +1,28 @@
-import { Group, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
+import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } from 'three';
 
 
 // from https://poly.google.com/view/7HbqG8RwRcA
 // Credit: Poly by Google
-class Can extends Group {
+class Bottle extends Group {
   constructor(parent) {
     super();
     // const loader = new OBJLoader();
-    this.name = 'can';
+    this.name = 'bottle';
     this.parent = parent;
     let x = Math.random() * 1500;
     let y = 70 + Math.random() * 50;
     let z = Math.random() * 1500;
     this.position.set(x,y,z)
-    this.box = new BoxGeometry(8, 8, 12);
+    this.box = new BoxGeometry(10, 30, 10);
     this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
     var boundbox = new Mesh( this.box, this.boxmaterial );
     boundbox.position.set(x,y,z);
+    boundbox.rotateZ(-Math.PI/4);
     boundbox.visible = false;
     this.BB = boundbox;
     this.add(this.BB);
     this.object = new Object3D();
-    this.object.copy(parent.objects.can);
+    this.object.copy(parent.objects.bottle);
     this.object.position.set(x,y,z);
     this.add(this.object);
   }
@@ -43,4 +44,4 @@ class Can extends Group {
   }
 }
 
-  export default Can;
+  export default Bottle;

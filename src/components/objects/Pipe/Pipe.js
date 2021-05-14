@@ -3,14 +3,14 @@ import { Group, Box3, Vector3, BoxGeometry, MeshBasicMaterial, Mesh, Object3D } 
 
 // from https://poly.google.com/view/4cFllH6Iazk
 // Credit: Poly by Google
-class Kelp extends Group {
+class Pipe extends Group {
   constructor(parent) {
     super();
     // const loader = new OBJLoader();
-    this.name = 'kelp';
+    this.name = 'pipe';
     this.parent = parent;
     this.object = new Object3D();
-    this.object.copy(parent.objects.kelp);
+    this.object.copy(parent.objects.pipe);
     // this.object.position.set(x,y,z);
     this.add(this.object);
 
@@ -29,4 +29,4 @@ class Kelp extends Group {
   }
 }
 
-  export default Kelp;
+  export default Pipe;

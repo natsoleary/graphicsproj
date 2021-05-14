@@ -17,7 +17,7 @@ const chunkVertexWidth = 60;
 
 
 class TerrainManager extends Group {
-    constructor(parent, shark, boot, kelp, baby, trash, can) {
+    constructor(parent, shark, boot, kelp, baby, trash, can, bottle, anemone, pipe) {
         // Call parent Group() constructor
         super();
 
@@ -29,6 +29,9 @@ class TerrainManager extends Group {
           baby: baby,
           trash: trash,
           can: can,
+          bottle: bottle,
+          anemone: anemone,
+          pipe: pipe,
 
         };
         // Init state
@@ -137,7 +140,6 @@ class TerrainManager extends Group {
 
       }
       else if(z < -this.state.chunkWidth/2) {
-        zneg = true;
         this.state.currentZOffset -= this.state.chunkWidth;
         this.state.parent.state.z += this.state.chunkWidth;
 
@@ -211,7 +213,6 @@ class TerrainManager extends Group {
       }
 
       else if(x < -this.state.chunkWidth/2) {
-        xneg = true;
         this.state.currentXOffset -= this.state.chunkWidth;
         this.state.parent.state.x += this.state.chunkWidth;
 

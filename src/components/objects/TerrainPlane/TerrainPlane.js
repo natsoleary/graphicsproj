@@ -2,7 +2,6 @@ import { Group, Color, PlaneBufferGeometry, VertexColors, PlaneGeometry, MeshSta
 import  SimplexNoise  from 'simplex-noise';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import SAND from './sandgrain.jpeg';
 import {Baby} from '../Baby';
 import {Boot} from '../Boot';
 import {Seaweed} from '../Seaweed';
@@ -10,6 +9,10 @@ import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
 import {Trash} from '../Trash';
 import {Can} from '../Can';
+import {Bottle} from '../Bottle';
+import {Anemone} from '../Anemone';
+import {Pipe} from '../Pipe';
+import {Fish} from '../Fish';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
 
 
@@ -68,6 +71,7 @@ class TerrainPlane extends Group {
         this.seaweeds = [];
         this.obstacles = [];
         this.sharks = [];
+        this.plants = [];
 
   
         // get perline noise height map and update the geometry
@@ -121,7 +125,7 @@ class TerrainPlane extends Group {
 
         this.spawnBabies();
         this.spawnObstacles();     
-        this.spawnKelp();  
+        this.spawnPlants();  
         
 
         // Add self to parent's update list
@@ -130,9 +134,8 @@ class TerrainPlane extends Group {
     }
     spawnBabies() {
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 15; i++) {
             let baby = new Baby(this);
-            this.add(baby);
             this.add(baby);
             this.state.parent.state.parent.collidableMeshList.push(baby);
             this.babies.push(baby);
@@ -170,19 +173,56 @@ class TerrainPlane extends Group {
             this.state.parent.state.parent.obstacleList.push(can);
             this.obstacles.push(can);       
          }
+         for (let i  = 0; i < 5; i++) {
+            let bottle = new Bottle(this);
+            this.add(bottle);
+            this.state.parent.state.parent.obstacleList.push(bottle);
+            this.obstacles.push(bottle);       
+         }
+
 
     }
-    spawnKelp() {
+    spawnPlants() {
             for (let i = 0; i < 5; i++) {
                 let random = Math.round(Math.random()*6960);
                 const f = this.geometry.faces[random]
                 const v = this.geometry.vertices[f.a].clone();
-                    let kelp = new Kelp(this, this.kelp);
-                    kelp.position.set(v.y,v.z + 25,v.x);
+                    let kelp = new Kelp(this);
+                    kelp.position.set(v.y,v.z + 10,v.x);
                     this.add(kelp);
+                this.plants.push(kelp);
 
         }
+        for (let i = 0; i < 3; i++) {
+            let random = Math.round(Math.random()*6960);
+            const f = this.geometry.faces[random]
+            const v = this.geometry.vertices[f.a].clone();
+                let anemone = new Anemone(this);
+                anemone.position.set(v.y,v.z + 10,v.x);
+                this.add(anemone);
+                this.plants.push(anemone);
 
+
+    }
+    for (let i = 0; i < 5; i++) {
+        let random = Math.round(Math.random()*6960);
+        const f = this.geometry.faces[random]
+        const v = this.geometry.vertices[f.a].clone();
+            let pipe = new Pipe(this);
+            pipe.position.set(v.y,v.z + 10,v.x);
+            this.add(pipe);
+            this.plants.push(pipe);
+
+
+}
+// for (let i = 0; i < 5; i++) {
+//     let fish = new Fish(this);
+//     this.add(fish);
+//     this.plants.push(pipe);
+
+    
+
+// }
 
     }
 
@@ -296,6 +336,9 @@ class TerrainPlane extends Group {
       }
       for (let obstacle of this.obstacles) {
         obstacle.disposeOf();
+    }
+    for (let plant of this.plants) {
+        plant.disposeOf();
     }
 
       return this.geometry;

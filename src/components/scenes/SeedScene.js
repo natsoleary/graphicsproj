@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry, LoadingManager} from 'three';
-import {Shark, Turtle, Seafloor, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
+import {Shark, Turtle, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import SHARK_MODEL from './shark.obj';
@@ -15,10 +15,22 @@ import TRASH_MODEL from './trash_model.obj';
 import TRASH_MAT from './trash_materials.mtl';
 import CAN_MODEL from './SodaCan_01.obj';
 import CAN_MAT from './SodaCan_01.mtl';
+import BOTTLE_MODEL from './water_bottle.obj';
+import BOTTLE_MAT from './water_bottle.mtl';
+import ANEMONE_MODEL from './anemone.obj';
+import ANEMONE_MAT from './anemone.mtl';
+import PIPE_MODEL from './PipeOrganCactus.obj';
+import PIPE_MAT from './PipeOrganCactus.mtl';
+import FISH_MODEL from './scene.gltf';
+import PIPE_IMAGE from './PipeOrganCactus_BaseColor.png'
+
+
 
 
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
 
 // import { Turtle } from '../objects';
 
@@ -75,13 +87,10 @@ class SeedScene extends Scene {
         this.babyLoaded = false;
         this.trashLoaded = false;
         this.canLoaded = false;
-
-        this.loadSharks();
-        this.loadBoots();
-        this.loadKelp();
-        this.loadBaby();
-        this.loadTrash();
-        this.loadCan();
+        this.bottleLoaded = false;
+        this.anemoneLoaded = false;
+        this.pipeLoaded = false;
+        this.fishLoaded = false;
 
         this.kelp = null;
         this.shark = null;
@@ -89,6 +98,21 @@ class SeedScene extends Scene {
         this.baby = null;
         this.trash = null;
         this.can = null;
+        this.bottle = null;
+        this.anemone = null;
+        this.pipe = null;
+        this.fish = null;
+
+        this.loadSharks();
+        this.loadBoots();
+        this.loadKelp();
+        this.loadBaby();
+        this.loadTrash();
+        this.loadCan();
+        this.loadBottle();
+        this.loadAnemone();
+        this.loadPipe();
+        // this.loadFish();
 
         this.ONCE = true;
 
@@ -125,7 +149,7 @@ class SeedScene extends Scene {
             });
             this.boot = object;
             this.boot.name = "boot";
-            object.scale.multiplyScalar(3);
+            object.scale.multiplyScalar(5);
           });
     }
     loadKelp() {
@@ -203,16 +227,95 @@ class SeedScene extends Scene {
           });
         });
     }
+    loadBottle () {
+        const bottlemanager = new LoadingManager();
+        bottlemanager.onLoad = () => {
+            this.bottleLoaded = true;
+            }
+        const bottleloader = new OBJLoader(bottlemanager);
+
+        var mtlLoader = new MTLLoader();
+      
+        mtlLoader.load(BOTTLE_MAT, ( materials ) => {
+          materials.preload();
+          bottleloader.setMaterials( materials );
+          bottleloader.load(BOTTLE_MODEL, (object) => { // load object and add to scen
+
+            object.scale.multiplyScalar(3);
+            object.rotateZ(-Math.PI/4);
+            this.bottle = object;
+          });
+        });
+    }
+    loadAnemone () {
+        const anemonemanager = new LoadingManager();
+        anemonemanager.onLoad = () => {
+            this.anemoneLoaded = true;
+            }
+        const anemoneloader = new OBJLoader(anemonemanager);
+
+        var mtlLoader = new MTLLoader();
+      
+        mtlLoader.load(ANEMONE_MAT, ( materials ) => {
+          materials.preload();
+          anemoneloader.setMaterials( materials );
+          anemoneloader.load(ANEMONE_MODEL, (object) => { // load object and add to scen
+
+            object.scale.multiplyScalar(7);
+            // object.rotateZ(-Math.PI/4);
+            this.anemone = object;
+          });
+        });
+    }
+    loadPipe () {
+        const pipemanager = new LoadingManager();
+        pipemanager.onLoad = () => {
+            this.pipeLoaded = true;
+        }
+        const pipeloader = new OBJLoader(pipemanager);
+
+        pipeloader.load(PIPE_MODEL, (object) => { // load object and add to scene
+            let texture = new TextureLoader().load(PIPE_IMAGE);
+            object.traverse((child) => {
+              if (child.type == "Mesh") child.material.map = texture;
+            });
+            this.pipe = object;
+            object.scale.multiplyScalar(8);
+          });
+    }
+    loadFish() {
+        const fishmanager = new LoadingManager();
+        fishmanager.onLoad = () => {
+            this.fishLoaded = true;
+        }
+        const fishloader = new GLTFLoader(fishmanager);
+
+        // load the seaweed
+        fishloader.load(FISH_MODEL, (gltf) => {
+        const model = gltf.scene.children[0];
+        model.scale.set(0.1, 0.1, 0.1);
+
+        this.fish = model;
+  
+     
+        model.rotateZ(Math.PI/2);
+          //model.children[0].rotateY(Math.PI);
+    
+          // add model to scene
+        });
+    }
 
     addToUpdateList(object) {
         this.state.updateList.push(object);
     }
 
     update(timeStamp) {
-        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.canLoaded && this.ONCE) {
+        if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.canLoaded && 
+             this.bottleLoaded && this.anemoneLoaded && this.pipeLoaded && this.ONCE) {
             this.ONCE = false;
             console.log("here");
-            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash, this.can);
+            var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash, this.can, 
+                this.bottle, this.anemone, this.pipe);
             this.add(terrainMan)
         }
         const { updateList, x, y, z } = this.state;

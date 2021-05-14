@@ -9,11 +9,11 @@ class Trash extends Group {
     // const loader = new OBJLoader();
     this.name = 'trash';
     this.parent = parent;
-    let x = Math.random() * 2000;
+    let x = Math.random() * 1500;
     let y = 70 + Math.random() * 50;
-    let z = Math.random() * 2000;
+    let z = Math.random() * 1500;
     this.position.set(x,y,z)
-    this.box = new BoxGeometry(10, 10, 10);
+    this.box = new BoxGeometry(15, 15, 15);
     this.boxmaterial = new MeshBasicMaterial( { color: 0x9999ff} );
     var boundbox = new Mesh( this.box, this.boxmaterial );
     boundbox.position.set(x,y,z);
