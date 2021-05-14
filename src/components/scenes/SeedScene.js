@@ -113,7 +113,7 @@ class SeedScene extends Scene {
         this.loadBottle();
         this.loadAnemone();
         this.loadPipe();
-        this.loadFish();
+        //this.loadFish();
 
         this.ONCE = true;
 
