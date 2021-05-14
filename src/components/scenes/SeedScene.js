@@ -3,7 +3,7 @@ import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial
 import {Shark, Turtle, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import SHARK_MODEL from './shark.obj';
+import SHARK_MODEL from './Mesh_Shark.obj';
 import SHARK_IMAGE from './Tex_Shark.png';
 import BOOT_MODEL from './CHAHIN_BOOTS.obj';
 import BOOT_IMAGE from './CHAHIN_BOOTS_TEXTURE.jpg';
@@ -66,18 +66,6 @@ class SeedScene extends Scene {
         console.log(boundbox);
         // this.fog = new FogExp2(color, density);
 
-        // // setup audio
-        // var listener = new AudioListener();
-        // var sound = new Audio( listener );
-        // var audioLoader = new AudioLoader();
-
-        // // the audio source comes from https://music.163.com/#/song?id=223339
-        // audioLoader.load( 'meow.mp3', ( buffer ) => {
-        //     sound.setBuffer( buffer );
-        //     sound.setLoop( false );
-        //     sound.setVolume( 1.0 );
-        //     sound.pause();
-        // });
 
         // Add meshes to scene
         // const land = new Land();
@@ -147,7 +135,7 @@ class SeedScene extends Scene {
               if (child.type == "Mesh") child.material.map = texture;
             });
             this.shark = object;
-            object.scale.multiplyScalar(8);
+            object.scale.multiplyScalar(0.5);
           });
     }
     loadBoots() {
