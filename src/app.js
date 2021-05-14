@@ -6,10 +6,11 @@
  * handles window resizes.
  *
  */
- import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+ import { WebGLRenderer, PerspectiveCamera, Vector3, AudioListener, Audio, AudioLoader } from 'three';
  import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
  import { SeedScene } from 'scenes';
  import coralIcon from './components/icons/coral/coral.png'
+ import song from './audio/bensound-psychedelic.mp3'
  
  import './app.css'
  
@@ -17,6 +18,18 @@
  const camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
  const scene = new SeedScene(camera);
  const renderer = new WebGLRenderer({ antialias: true });
+
+var listener = new AudioListener();
+camera.add( listener );
+var sound = new Audio( listener );
+var audioLoader = new AudioLoader();
+// the audio source comes from Bensound.com
+audioLoader.load( song, ( buffer ) => {
+sound.setBuffer( buffer );
+sound.setLoop( true );
+sound.setVolume( 1 );
+sound.pause();
+});
  
  // Set up camera
  // camera.position.set(6, 3, -10);
@@ -75,6 +88,7 @@
  var medium = false;
  var hard = false;
  
+
  
  
  // start screen 
@@ -118,6 +132,7 @@
          beginContentButton.onclick = function () {
              beginContainer.style.display = 'none';
              scene.unpauseTurtle(easy, medium, hard);
+             sound.play();
  
          };
  
@@ -355,6 +370,7 @@ endContainer.style.display = 'none';
      
         endContainer.style.display = 'flex';
         endContentScore.innerText = babiesCollected;
+        sound.pause();
     }
     document.getElementById('babies').innerHTML = 'Babies: ' + babiesCollected;
  

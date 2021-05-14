@@ -66,6 +66,19 @@ class SeedScene extends Scene {
         console.log(boundbox);
         // this.fog = new FogExp2(color, density);
 
+        // // setup audio
+        // var listener = new AudioListener();
+        // var sound = new Audio( listener );
+        // var audioLoader = new AudioLoader();
+
+        // // the audio source comes from https://music.163.com/#/song?id=223339
+        // audioLoader.load( 'meow.mp3', ( buffer ) => {
+        //     sound.setBuffer( buffer );
+        //     sound.setLoop( false );
+        //     sound.setVolume( 1.0 );
+        //     sound.pause();
+        // });
+
         // Add meshes to scene
         // const land = new Land();
         // const flower = new Flower(this);
@@ -118,6 +131,8 @@ class SeedScene extends Scene {
 
 
     }
+
+    
 
     loadSharks() {
         const sharkmanager = new LoadingManager();
