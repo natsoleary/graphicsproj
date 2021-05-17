@@ -21,8 +21,10 @@ import ANEMONE_MODEL from './anemone.obj';
 import ANEMONE_MAT from './anemone.mtl';
 import PIPE_MODEL from './PipeOrganCactus.obj';
 import PIPE_MAT from './PipeOrganCactus.mtl';
-import FISH_MODEL from './scene.gltf';
 import PIPE_IMAGE from './PipeOrganCactus_BaseColor.png'
+import PURPLE_MODEL from './2_Anemone.obj';
+import PURPLE_IMAGE from './2_Anemone.png'
+
 
 
 
@@ -92,6 +94,7 @@ class SeedScene extends Scene {
         this.anemoneLoaded = false;
         this.pipeLoaded = false;
         this.fishLoaded = false;
+        this.purpleLoaded = false;
 
         this.kelp = null;
         this.shark = null;
@@ -103,6 +106,7 @@ class SeedScene extends Scene {
         this.anemone = null;
         this.pipe = null;
         this.fish = null;
+        this.purple = null;
 
         this.loadSharks();
         this.loadBoots();
@@ -113,6 +117,7 @@ class SeedScene extends Scene {
         this.loadBottle();
         this.loadAnemone();
         this.loadPipe();
+        this.loadPurple();
         //this.loadFish();
 
         this.ONCE = true;
@@ -286,6 +291,22 @@ class SeedScene extends Scene {
             object.scale.multiplyScalar(8);
           });
     }
+    loadPurple () {
+        const purplemanager = new LoadingManager();
+        purplemanager.onLoad = () => {
+            this.purpleLoaded = true;
+        }
+        const purpleloader = new OBJLoader(purplemanager);
+
+        purpleloader.load(PURPLE_MODEL, (object) => { // load object and add to scene
+            let texture = new TextureLoader().load(PURPLE_IMAGE);
+            object.traverse((child) => {
+              if (child.type == "Mesh") child.material.map = texture;
+            });
+            this.purple = object;
+            // object.scale.multiplyScalar();
+          });
+    }
     loadFish() {
         const fishmanager = new LoadingManager();
         fishmanager.onLoad = () => {
@@ -312,11 +333,11 @@ class SeedScene extends Scene {
 
     update(timeStamp) {
         if (this.sharkLoaded && this.bootLoaded && this.kelpLoaded && this.babyLoaded && this.trashLoaded && this.canLoaded && 
-             this.bottleLoaded && this.anemoneLoaded && this.pipeLoaded && this.ONCE) {
+             this.bottleLoaded && this.anemoneLoaded && this.pipeLoaded && this.purpleLoaded && this.ONCE) {
             this.ONCE = false;
             console.log("here");
             var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash, this.can, 
-                this.bottle, this.anemone, this.pipe);
+                this.bottle, this.anemone, this.pipe, this.purple);
             this.add(terrainMan)
         }
         const { updateList, x, y, z } = this.state;

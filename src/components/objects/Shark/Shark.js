@@ -24,36 +24,42 @@ class Shark extends Group {
     this.shark.copy(parent.objects.shark);
     this.shark.position.set(x,y,z);
     this.add(this.shark);
-    // this.rotation_axis = new Vector3(x, y, z);
-    // loader.load(MODEL, (object) => { // load object and add to scene
-    //   let texture = new TextureLoader().load(IMAGE);
-    //   object.traverse((child) => {
-    //     if (child.type == "Mesh") child.material.map = texture;
-    //   });
-    //   this.shark = object;
-    //   this.shark.position.set(x,y,z);
-    //   object.scale.multiplyScalar(3);
-    // //   object.position.y = -23.7;
-    //   this.add(object);
-    // });
+    this.count = 0;
+    this.startposition = this.position;
+    this.prevTimestamp = null;
+    this.cumulative = 0;
+
   }
 
 update(timeStamp) {
    // move Shark
    if (this.shark != undefined) {
+     if (timeStamp != this.prevTimestamp) {
+    //  console.log(timeStamp)
     let oldSharkLocation = new Vector2(this.shark.position.x, this.shark.position.z);
     let newSharkLocation = new Vector2(200*Math.cos(timeStamp/500), 200*Math.sin(timeStamp/500));
+    let nextLocation = new Vector2(200*Math.cos((timeStamp + 1)/500), 200*Math.sin((timeStamp + 1)/500));
     let sharkDifference = oldSharkLocation.clone().sub(newSharkLocation);
-    let sharkAng = sharkDifference.angle();
-    this.shark.rotateY(-1 *1/50 * sharkAng);
+    let sharkAng = Math.abs(sharkDifference.angle());
+    // let lookAt = new Vector3(nextLocation.x, this.shark.position.y, nextLocation.z);
+    // this.shark.lookAt(lookAt);
+    this.shark.rotateY(-1 *1/50* sharkAng);
+    // console.log(sharkAng);
+    this.cumulative += sharkAng;
     this.shark.position.x = 200*Math.cos(timeStamp/500);
     this.shark.position.z = 200*Math.sin(timeStamp/500);
     this.BB.rotateY(-1 *1/50* sharkAng);
     this.BB.position.x = 200*Math.cos(timeStamp/500);
     this.BB.position.z = 200*Math.sin(timeStamp/500);   
+    // if (this.cumulative >= 2* Math.PI)  {
+    //   console.log(this.count)
+    // }
+    this.prevTimestamp = timeStamp;
 
+    this.count++;
     // this.shark.rotateOnAxis(this.rotation_axis, Math.PI/10);
   }
+}
 }
 disposeOf() {
   this.boxmaterial.dispose();

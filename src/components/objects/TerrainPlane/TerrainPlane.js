@@ -4,7 +4,6 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import {Baby} from '../Baby';
 import {Boot} from '../Boot';
-import {Seaweed} from '../Seaweed';
 import {Shark} from '../Shark';
 import {Kelp} from '../Kelp';
 import {Trash} from '../Trash';
@@ -12,7 +11,7 @@ import {Can} from '../Can';
 import {Bottle} from '../Bottle';
 import {Anemone} from '../Anemone';
 import {Pipe} from '../Pipe';
-import {Fish} from '../Fish';
+import {Purple}from '../Purple';
 // import MATERIAL from './PUSHLIN_kelp.mtl';
 
 
@@ -20,6 +19,7 @@ import {Fish} from '../Fish';
 const terrainSize = {width: 1000, height: 1000, vertsWidth: 100, vertsHeight: 100};
 const toRad = deg => deg * Math.PI/180
 
+// ADAPTED FROM THE DREAMWORLD PROJECT FROM COS 426 2020 
 
 
 class TerrainPlane extends Group {
@@ -215,6 +215,17 @@ class TerrainPlane extends Group {
 
 
 }
+for (let i = 0; i < 5; i++) {
+    let random = Math.round(Math.random()*6960);
+    const f = this.geometry.faces[random]
+    const v = this.geometry.vertices[f.a].clone();
+        let purple = new Purple(this);
+        purple.position.set(v.y,v.z + 10,v.x);
+        this.add(purple);
+        this.plants.push(purple);
+
+
+}
 // for (let i = 0; i < 5; i++) {
 //     let fish = new Fish(this);
 //     this.add(fish);
@@ -226,7 +237,7 @@ class TerrainPlane extends Group {
 
     }
 
-
+    // From Josh Marinacci's Medium article randomly generated terrain
     updateTerrainGeo() {///
         //assign vert data from the canvas
         for(let j=0; j<this.heightMap.length; j++) {

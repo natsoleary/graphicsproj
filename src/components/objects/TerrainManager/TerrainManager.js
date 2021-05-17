@@ -10,6 +10,8 @@ import { TerrainPlane } from '../TerrainPlane';
 USING THIS ARRAY STRUCTURE
 */
 
+// ADAPTED FROM THE DREAMWORLD PROJECT FROM COS 426 2020
+
 // SET THESE TO CHANGE CHUNK DIMENSIONS
 const startYBelow = 200;
 const chunkPxWidth = 900;
@@ -17,7 +19,7 @@ const chunkVertexWidth = 60;
 
 
 class TerrainManager extends Group {
-    constructor(parent, shark, boot, kelp, baby, trash, can, bottle, anemone, pipe) {
+    constructor(parent, shark, boot, kelp, baby, trash, can, bottle, anemone, pipe, purple) {
         // Call parent Group() constructor
         super();
 
@@ -32,6 +34,7 @@ class TerrainManager extends Group {
           bottle: bottle,
           anemone: anemone,
           pipe: pipe,
+          purple: purple, 
 
         };
         // Init state
@@ -101,6 +104,11 @@ class TerrainManager extends Group {
       // console.log("Update in chunk manager. x: " + x + " y: " + y + " z: " + z)
       // make/delete chunks as needed
       // Initialized as a 0 but are actually supposed to be PlaneGeometry objects
+
+
+      for (let chunk of this.state.terrain_chunks) {
+        chunk.updateSharks(timeStamp);
+      }
 
       let plane_geos = [0, 0, 0];
       let need_update = (z > this.state.chunkWidth/2) || (z < -this.state.chunkWidth/2)
@@ -270,9 +278,7 @@ class TerrainManager extends Group {
       this.position.x = -x;
       this.position.y = y - startYBelow;
       this.position.z = -z;
-      for (let chunk of this.state.terrain_chunks) {
-        chunk.updateSharks(timeStamp);
-      }
+
 
 
     }
