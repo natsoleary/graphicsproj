@@ -24,6 +24,7 @@ class TerrainManager extends Group {
         super();
 
         this.name = "TerrainManager"
+        this.parent = parent;
         this.objects = {
           shark: shark,
           boot: boot,
@@ -74,6 +75,10 @@ class TerrainManager extends Group {
           // this.add(new_chunk);
           this.state.terrain_chunks.push(new_chunk);
         }
+        // this.sharks = [];
+        // for (let chunk of this.state.terrain_chunks) {
+        //   this.sharks.push(chunk.sharks);
+        // }
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
@@ -106,9 +111,9 @@ class TerrainManager extends Group {
       // Initialized as a 0 but are actually supposed to be PlaneGeometry objects
 
 
-      for (let chunk of this.state.terrain_chunks) {
-        chunk.updateSharks(timeStamp);
-      }
+      // for (let chunk of this.state.terrain_chunks) {
+      //   chunk.updateSharks(timeStamp);
+      // }
 
       let plane_geos = [0, 0, 0];
       let need_update = (z > this.state.chunkWidth/2) || (z < -this.state.chunkWidth/2)

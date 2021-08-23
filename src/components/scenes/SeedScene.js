@@ -1,5 +1,5 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry, LoadingManager} from 'three';
+import { Scene, Color, FogExp2, Fog, Vector3, Raycaster, Box3, MeshBasicMaterial, Mesh, BoxGeometry, LoadingManager, Vector2} from 'three';
 import {Shark, Turtle, TerrainPlane, TerrainManager, Baby, Boot} from 'objects';
 import { BasicLights } from 'lights';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
@@ -119,8 +119,11 @@ class SeedScene extends Scene {
         this.loadPipe();
         this.loadPurple();
         //this.loadFish();
+        this.sharks = [];
 
         this.ONCE = true;
+
+        this.TerrainManager = null;
 
 
     }
@@ -338,6 +341,7 @@ class SeedScene extends Scene {
             console.log("here");
             var terrainMan = new TerrainManager(this, this.shark, this.boot, this.kelp, this.baby, this.trash, this.can, 
                 this.bottle, this.anemone, this.pipe, this.purple);
+            this.TerrainManager = terrainMan;
             this.add(terrainMan)
         }
         const { updateList, x, y, z } = this.state;
@@ -353,6 +357,17 @@ class SeedScene extends Scene {
 
             
         }
+        for (let shark of this.sharks) {
+
+            let oldSharkLocation = new Vector2(shark.position.x, shark.position.z);
+            let newSharkLocation = new Vector2(200*Math.cos(timeStamp/2000), 200*Math.sin(timeStamp/2000));
+            let sharkDifference = oldSharkLocation.clone().sub(newSharkLocation);
+            let sharkAng = sharkDifference.angle();
+            shark.rotation.y = -1 * (sharkAng -  6 * Math.PI / 4);
+            shark.position.x = 200*Math.cos(timeStamp/2000);
+            shark.position.z = 200*Math.sin(timeStamp/2000);
+        }
+
         this.detectCollisions();
         this.detectObstacles();
 

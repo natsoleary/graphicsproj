@@ -30,6 +30,7 @@ class TerrainPlane extends Group {
         super();
 
         // Init state
+        this.parent = parent;
         this.objects = parent.objects;
         this.state = {
             parent: parent,
@@ -157,6 +158,7 @@ class TerrainPlane extends Group {
             this.state.parent.state.parent.obstacleList.push(shark);
             this.obstacles.push(shark);
             this.sharks.push(shark);
+            this.parent.parent.sharks.push(shark);
 
         }
 
@@ -362,11 +364,11 @@ for (let i = 0; i < 5; i++) {
 
 
       }
-      updateSharks(timeStamp) {
-          for (let shark of this.sharks) {
-              shark.update(timeStamp);
-          }
-      }
+    //   updateSharks(timeStamp) {
+    //       for (let shark of this.sharks) {
+    //           shark.update(timeStamp);
+    //       }
+    //   }
     // update(xneg, zneg, offset) {
     //     for (let sea of this.seaweeds) {
     //         sea.update(xneg, zneg, offset);   
