@@ -16,7 +16,9 @@ class Purple extends Group {
 
   }
   disposeOf() {
-
+    for (let child of this.object.children) {
+      child.material.dispose();
+      child.geometry.dispose();    }
     this.remove(this.object);
 
     

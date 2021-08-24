@@ -16,8 +16,15 @@ class Anemone extends Group {
 
   }
   disposeOf() {
+    for (let child of this.object.children) {
+      for (let material of child.material) {
+        material.dispose();
 
+      }
+      child.geometry.dispose();
+    }
     this.remove(this.object);
+
 
     
   }

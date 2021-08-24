@@ -35,6 +35,16 @@ class Baby extends Group {
     disposeOf() {
       this.boxmaterial.dispose();
       this.box.dispose();
+
+      for (let child of this.baby.children) {
+        // console.log(child);
+        child.geometry.dispose();
+        // console.log(child.material);
+        for (let material of child.material) {
+          material.dispose();
+        }
+        // child.material.dispose();
+      }
       this.remove(this.BB);
       this.remove(this.baby);
 

@@ -28,6 +28,14 @@ class Can extends Group {
   disposeOf() {
     this.boxmaterial.dispose();
     this.box.dispose();
+    for (let child of this.object.children) {
+      // console.log(child);
+      // child.material.dispose();
+      child.geometry.dispose();
+      for(let material of child.material) {
+        material.dispose();
+      }
+    }
     this.remove(this.BB);
     this.remove(this.object);
 

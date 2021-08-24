@@ -28,6 +28,10 @@ class Boot extends Group {
   disposeOf() {
     this.boxmaterial.dispose();
     this.box.dispose();
+    for (let child of this.object.children) {
+      child.material.dispose();
+      child.geometry.dispose();
+    }
     this.remove(this.BB);
     this.remove(this.object);
 

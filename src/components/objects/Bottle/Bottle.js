@@ -29,6 +29,12 @@ class Bottle extends Group {
   disposeOf() {
     this.boxmaterial.dispose();
     this.box.dispose();
+    for (let child of this.object.children) {
+      for (let material of child.material) {
+        material.dispose();
+      }
+      child.geometry.dispose();
+    }
     this.remove(this.BB);
     this.remove(this.object);
 

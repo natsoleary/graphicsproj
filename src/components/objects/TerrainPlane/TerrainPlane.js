@@ -343,6 +343,9 @@ for (let i = 0; i < 5; i++) {
       this.material.dispose();
       this.remove(this.children[0]);
       this.remove(this.children[1]);
+    //   for (let child of this.children) {
+    //     child.dispose();
+    //   }
     //   this.remove
       for (let baby of this.babies) {
           baby.disposeOf();

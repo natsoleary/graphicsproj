@@ -64,6 +64,10 @@ class Shark extends Group {
 disposeOf() {
   this.boxmaterial.dispose();
   this.box.dispose();
+  for (let child of this.shark.children) {
+    child.material.dispose();
+    child.geometry.dispose();
+  }
   this.remove(this.BB);
   this.remove(this.shark)
 
